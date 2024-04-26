@@ -1,31 +1,33 @@
 function Header() {
     return (
         <header id="header">
-            <p class="name" id="name">Goulwenn Lazour</p>
-            <ul class="menu" id="menu">
+            <p className="name" id="name">LZoro</p>
+            <ul className="menu" id="menu">
                 <a href="#acceuil">
-                    <li class="accueil" id="accueil" onclick="menuClose()">
+                    <li className="accueil" id="accueil">
                         Accueil
                     </li>
                 </a>
                 <a href="#about">
-                    <li class="About" id="About" onclick="menuClose()">À propos</li>
+                    <li className="classement" id="About">
+                        Classement
+                    </li>
                 </a>
                 <a href="#works">
-                    <li class="work" id="work" onclick="menuClose()">
-                        Projets
+                    <li className="tournoi" id="tournoi">
+                        Tournoi
                     </li>
                 </a>
                 <a href="#contact">
-                    <li class="Contact" id="Contact" onclick="menuClose()">
-                        Contact
+                    <li className="profil" id="profil">
+                        Profil
                     </li>
                 </a>
             </ul>
-            <div class="phone-menu phone" id="phonemenu">
-            <div class="phone-trait trait-1">&nbsp;</div>
-            <div class="phone-trait trait-2">&nbsp;</div>
-            <div class="phone-trait trait-3">&nbsp;</div>
+            <div className="phone-menu phone" id="phonemenu">
+            <div className="phone-trait trait-1">&nbsp;</div>
+            <div className="phone-trait trait-2">&nbsp;</div>
+            <div className="phone-trait trait-3">&nbsp;</div>
             </div>
         </header>
     );
