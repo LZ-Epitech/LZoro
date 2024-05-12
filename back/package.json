@@ -11,6 +11,8 @@
   "keywords": [],
   "description": "",
   "dependencies": {
+    "airtable": "^0.12.2",
+    "cors": "^2.8.5",
     "express": "^4.19.2"
   }
 }
