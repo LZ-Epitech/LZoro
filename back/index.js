@@ -17,8 +17,16 @@ app.get('/users', async (req, res) => {
   res.json(users);
 })
 app.get('/tournaments', async (req, res) => {
-  const users = await getTournaments();
-  res.json(users);
+  const tournaments = await getTournaments();
+  res.json(tournaments);
+})
+app.get('/tournaments/1v1', async (req, res) => {
+  const tournaments1v1 = await getTournaments1v1();
+  res.json(tournaments1v1);
+})
+app.get('/tournaments/2v2', async (req, res) => {
+  const tournaments2v2 = await getTournaments2v2();
+  res.json(tournaments2v2);
 })
 
 app.listen(port, () => {
@@ -44,4 +52,24 @@ async function getTournaments()
         console.error('Error fetching tournoi:', error);
         return [];
     }
+}
+
+async function getTournaments1v1()
+{
+  let tournoi = await getTournaments();
+  let tournaments1v1 = tournoi.filter(tour => {
+      return tour.fields.format == "1v1";
+  })
+
+  return tournaments1v1;
+}
+
+async function getTournaments2v2()
+{
+  let tournoi = await getTournaments();
+  let tournaments2v2 = tournoi.filter(tour => {
+      return tour.fields.format == "2v2";
+  })
+
+  return tournaments2v2;
 }
