@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Teachers:ital,wght@0,400..800;1,400..800&display=swap');
+
+* {
+    font-family: "Teachers", sans-serif;
+}
+
+.title {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+}
+
+.image-title {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0.7;
+}
+
+.title h1 {
+    z-index: 1;
+    font-size: 50px;
+    color: whitesmoke;
+    cursor: default;
+    user-select: none;
+    transition: all ease .5s;
+}
+
+h1::after {
+    background-color: whitesmoke;
+    height: 5px;
+    width: 0;
+    content: "";
+    display: flex;
+    border-radius: 5px;
+    transition: all ease .2s;
+}
+
+h1:hover {
+    font-size: 60px;
+}
+
+h1:hover::after {
+    width: 100%;
+}
+
+.information {
+    height: 100vh;
+    width: 100vw;
+    background-color: gray;
+    color: blanchedalmond;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
