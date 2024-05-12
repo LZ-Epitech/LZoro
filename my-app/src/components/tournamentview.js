@@ -32,7 +32,10 @@ function TournamentView(props)
     });
 
     return(
-        <div className="trnView">
+        <div className="tournamentview">
+            <h2 className="tournamentview__title">
+                Tournaments
+            </h2>
             {list}
         </div>
     );

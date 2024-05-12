@@ -37,6 +37,9 @@ function TopRankings(props)
 
     return(
         <div className="toprankings">
+            <h2 className="toprankings__title">
+                Top Rankings
+            </h2>
             <div className="top3">
                 <img src={top3img} />
                 {listtop3}

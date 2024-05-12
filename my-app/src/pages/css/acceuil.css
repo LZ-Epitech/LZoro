@@ -64,5 +64,5 @@ h1:hover::after {
 .info__container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
 }
