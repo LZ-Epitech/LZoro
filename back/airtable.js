@@ -1,4 +1,4 @@
-var Airtable = require('airtable');
+import Airtable from 'airtable';
 
 // function getTable(table)
 // {
@@ -52,4 +52,4 @@ function getTable(table) {
 }
 
 
-export { getTable };
+export default getTable;
