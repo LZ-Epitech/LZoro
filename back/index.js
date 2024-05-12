@@ -28,7 +28,7 @@ app.get('/matchs', async (req, res) =>{
     res.json(matchs);
 })
 app.get('/matchsFromPlayer', async (req, res) => {
-    const matchs = await getMatchsFromPlayer();
+    const matchs = await getMatchsFromPlayer(req.body);
     res.json(matchs);
 })
 
@@ -88,10 +88,25 @@ async function getMatchs()
     }
 }
 
+function isInMatchs(player, matchs)
+{
+    let playerEquipe1 = matchs.fields.equipe1.split(':');
+    let playerEquipe2 = matchs.fields.equipe2.split(':');
+
+    if (playerEquipe1.has(player) || playerEquipe2.has(player)) {
+        return 1;
+    }
+    return 0;
+}
+
 async function getMatchsFromPlayer(player)
 {
     let matchs = getMatchs();
     let matchsPlayer = matchs.filter(match => {
-        return match.fields.
+    for (let i = 0; matchs[i] != null; i++) {
+        if (isInMatchs(player, matchs[i]) == 1)
+            matchsPlayer += matchs[i];
+    }
+        return match.fields.equipe1
     })
 }
