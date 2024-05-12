@@ -2,6 +2,8 @@
 function getAPI(method, routes, data)
 {
     useEffect(() => {
+        if (data == null)
+            data = [];
         const fetchOrders = async () => {
 
         try {
