@@ -23,6 +23,8 @@ async function getTournament()
     }
 }
 
+
+
 function getMatchsFromPlayer(player)
 {
 

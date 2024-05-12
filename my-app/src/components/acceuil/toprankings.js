@@ -1,4 +1,4 @@
-import top3img from '../Frame 2.svg';
+import top3img from '../../Frame 2.svg';
 import './css/toprankings.css';
 import { ProfilHead, ProfilMinComponent } from './profils/profils.js';
 

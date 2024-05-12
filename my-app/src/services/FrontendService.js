@@ -56,4 +56,34 @@ function useTournamentList()
     return newitem;
 }
 
-export { useUsersList, useTournamentList };
+function getMatchFromSplit(match)
+{
+    const id = match.split('.')[0];
+    const equipe1 = match.split('.')[1].split(';')[0].split(':')[0];
+    const equipe2 = match.split('.')[1].split(';')[0].split(':')[1];
+    const score1 = match.split('.')[1].split(';')[1].split(':')[0];
+    const score2 = match.split('.')[1].split(';')[1].split(':')[1];
+    const matchs = {
+        id: id,
+        equipe1: equipe1,
+        equipe2: equipe2,
+        score1: score1,
+        score2: score2
+    };
+
+    return matchs;
+}
+
+function useMatchsFromTournament(tournament)
+{
+    const [Matchs, setMatchs] = useState([]);
+    const allmatchs = tournament.split(",");
+    const all_matchs = [];
+
+    for (let i = 0; allmatchs[i] != null; i++)
+        all_matchs = [...all_matchs + getMatchFromSplit(all_matchs[i])];
+    setMatchs(all_matchs);
+    return Matchs;
+}
+
+export { useUsersList, useTournamentList, useMatchsFromTournament };

@@ -1,7 +1,7 @@
 import './css/acceuil.css';
-import TopRankings from '../components/toprankings';
-import { TournamentView } from '../components/tournamentview';
-import { Ensemble } from '../components/ensemble';
+import TopRankings from '../components/acceuil/toprankings';
+import { TournamentView } from '../components/acceuil/tournamentview';
+import { Ensemble } from '../components/acceuil/ensemble';
 
 function Acceuil(props)
 {
