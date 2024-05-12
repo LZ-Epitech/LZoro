@@ -4,6 +4,13 @@
     font-family: "Teachers", sans-serif;
 }
 
+.acceuil {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
 .title {
     margin: 0;
@@ -51,5 +58,5 @@ h1:hover::after {
 }
 
 .info {
-    width: 100vw;
+    width: 90vw;
 }

@@ -13,9 +13,13 @@ function TournamentPreview()
     );
 }
 
-function TournamentView()
+function TournamentView(trn_list)
 {
-    return;
+    
+    return(
+        <div className="trnView">
+        </div>
+    );
 }
 
 export { TournamentView };

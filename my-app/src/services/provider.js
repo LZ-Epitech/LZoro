@@ -6,7 +6,7 @@ import { getTable } from './airtable';
 async function getUsers()
 {
     try {
-        return await getTable("elo");
+        return await getTable("users");
     } catch (error) {
         console.error('Error fetching users:', error);
         return [];

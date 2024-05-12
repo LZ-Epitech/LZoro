@@ -19,7 +19,7 @@ function App()
     useEffect(() => {
         if (data.length > 0) {
             const updatedItems = data.map((record, index) => ({
-                name: record.fields.Name,
+                name: record.fields.name,
                 email: record.fields.email,
                 elo1: record.fields.elo1v1,
                 elo2: record.fields.elo2v2,
