@@ -2,12 +2,47 @@
  import TopRankings from '../components/acceuil/toprankings';
  import { TournamentView } from '../components/acceuil/tournamentview';
  import { Ensemble } from '../components/acceuil/ensemble';
+import { useEffect, useState } from 'react';
 
- function Acceuil({dataUsers})
+ function Acceuil()
  {
     //  const person = props.person;
     //  const trn_list = props.trn_list;
+    const [dataUsers, setDataUsers] = useState([]);
 
+    useEffect(() => {
+        const getInfo = async () => {
+
+        try {
+            // const token = localStorage.getItem('token');
+            const response = await fetch('http://localhost:3001/users', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+
+            },
+            // body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+            throw new Error('Failed to fetch data');
+            }
+            const data = await response.json();
+            setDataUsers(data);
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        } finally {
+        }
+        };
+
+        getInfo();
+
+        // Cleanup function
+        return () => {
+        // Optionally perform cleanup here, such as aborting ongoing requests
+        };
+    }, []);
      return(
          <div className='acceuil'>
              <section className="title">
