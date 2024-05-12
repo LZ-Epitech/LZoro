@@ -16,6 +16,10 @@ app.get('/users', async (req, res) => {
   const users = await getUsers();
   res.json(users);
 })
+app.get('/tournaments', async (req, res) => {
+  const users = await getTournaments();
+  res.json(users);
+})
 
 app.listen(port, () => {
   console.log(`Node.JS server launched on port [${port}] : http://localhost:${port}`)
@@ -32,7 +36,7 @@ async function getUsers()
     }
 }
 
-async function getTournament()
+async function getTournaments()
 {
     try {
         return await getTable("tournoi");

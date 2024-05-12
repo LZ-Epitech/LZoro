@@ -4,20 +4,23 @@ import Acceuil from './pages/acceuil.js';
 import { useUsersList, useTournamentList } from './services/FrontendService.js';
 import { Tournament } from './pages/tournament.js';
 import { useEffect, useState } from 'react';
-
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Profil from './pages/Profil.js';
+import Nav from './components/nav/Nav.js';
 let newitem = [];
 function App()
 {
     // const userList = useUsersList();
     // const tournoiList = useTournamentList();
-    const [data, setData] = useState([]);
+    const [dataUsers, setDataUsers] = useState([]);
 
     useEffect(() => {
         const getInfo = async () => {
 
         try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3001/', {
+            // const token = localStorage.getItem('token');
+            const response = await fetch('http://localhost:3001/users', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -30,7 +33,7 @@ function App()
             throw new Error('Failed to fetch data');
             }
             const data = await response.json();
-            setData(data);
+            setDataUsers(data);
             console.log(data);
         } catch (error) {
             console.log(error);
@@ -52,6 +55,20 @@ function App()
             {/* <Acceuil person={userList} trn_list={tournoiList} /> */}
             {/* <Acceuil trn_list={tournoiList} person={userList} /> */}
             {/* console.log(); */}
+            <BrowserRouter>
+            <Nav />
+            <Routes>
+                <Route path="/home" element={ <Acceuil dataUsers={dataUsers}/>}/>
+                <Route path="/profil" element={<Profil />} />
+
+
+
+                {/* <Route path="blogs" element={<Blogs />} />
+                <Route path="contact" element={<Contact />} />
+                <Route path="*" element={<NoPage />} /> */}
+               
+            </Routes>
+            </BrowserRouter>
         </div>
     );
 }
