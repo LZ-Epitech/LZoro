@@ -28,6 +28,10 @@ app.get('/tournaments/2v2', async (req, res) => {
   const tournaments2v2 = await getTournaments2v2();
   res.json(tournaments2v2);
 })
+app.get('/matchs', async (req, res) =>{
+  const matchs = await getMatchs();
+  res.json(matchs);
+})
 
 app.listen(port, () => {
   console.log(`Node.JS server launched on port [${port}] : http://localhost:${port}`)
@@ -72,4 +76,14 @@ async function getTournaments2v2()
   })
 
   return tournaments2v2;
+}
+
+async function getMatchs()
+{
+  try {
+      return await getTable("matchs");
+  } catch (error) {
+      console.error('Error fetching tournoi:', error);
+      return [];
+  }
 }
