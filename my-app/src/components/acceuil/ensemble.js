@@ -1,10 +1,10 @@
-// import './css/ensemble.css'
+ import './css/ensemble.css'
 
-// function Ensemble()
-// {
-//     return(
-//         <div className="ensemble"></div>
-//     );
-// }
+ function Ensemble()
+ {
+     return(
+         <div className="ensemble"></div>
+     );
+ }
 
-// export { Ensemble };
+ export { Ensemble };
