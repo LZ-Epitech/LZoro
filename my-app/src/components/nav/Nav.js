@@ -4,9 +4,11 @@ import React from 'react'
  function Nav() {
   return (
     <div>
-            <Link to="/home">Home</Link>
-            <Link to="/profil">profil</Link>
-            {/* <Link to="/cart">Panier</Link> */}
+            <Link to="/">Home</Link>
+            <Link to="/profil">Profil</Link>
+            <Link to="/ranked">Ranked</Link>
+            <Link to="/tournaments">Tournament</Link>
+
     </div>
   )
 }

@@ -2,12 +2,13 @@ import './App.css';
 import Tests from './tests/tests.js';
 import Acceuil from './pages/acceuil.js';
 import { useUsersList, useTournamentList } from './services/FrontendService.js';
-import { Tournament } from './pages/tournament.js';
+import  Tournament  from './pages/tournament.js';
 import { useEffect, useState } from 'react';
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Profil from './pages/Profil.js';
 import Nav from './components/nav/Nav.js';
+import Ranked from './pages/ranked.js';
 let newitem = [];
 function App()
 {
@@ -58,8 +59,10 @@ function App()
             <BrowserRouter>
             <Nav />
             <Routes>
-                <Route path="/home" element={ <Acceuil dataUsers={dataUsers}/>}/>
+                <Route path="/" element={ <Acceuil dataUsers={dataUsers}/>}/>
                 <Route path="/profil" element={<Profil />} />
+                <Route path="/ranked" element={<Ranked />} />
+                <Route path="/tournaments" element={<Tournament />} />
 
 
 
