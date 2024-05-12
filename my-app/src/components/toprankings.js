@@ -10,8 +10,8 @@ function TopRankings(props)
     const usr_list = props.usr_list;
 
     const listtop3 = three(usr_list).map((persons) => {
-        return <ProfilHead key={persons.email} persons={persons} />;
-    })
+        return <ProfilHead key={persons.email} persons={persons} />
+    });
 
     // Get list of all user {already elo sorted croissant}
     function three(usr_list) {

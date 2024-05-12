@@ -12,9 +12,15 @@ async function getUsers()
         return [];
     }
 }
-function getTournament()
-{
 
+async function getTournament()
+{
+    try {
+        return await getTable("tournoi");
+    } catch (error) {
+        console.error('Error fetching tournoi:', error);
+        return [];
+    }
 }
 
 function getMatchsFromPlayer(player)
@@ -32,4 +38,4 @@ function getBadgesPlayer(player)
 
 }
 
-export { getUsers }
+export { getUsers, getTournament }

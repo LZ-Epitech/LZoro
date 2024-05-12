@@ -46,7 +46,6 @@ function getTable(table) {
                 reject(err);
                 return;
             }
-            console.log(reco);
             resolve(reco);
         });
     });

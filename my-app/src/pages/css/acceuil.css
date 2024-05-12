@@ -60,3 +60,9 @@ h1:hover::after {
 .info {
     width: 90vw;
 }
+
+.info__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

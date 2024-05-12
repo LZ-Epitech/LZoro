@@ -1,9 +1,12 @@
 import './css/acceuil.css';
 import TopRankings from '../components/toprankings';
+import { TournamentView } from '../components/tournamentview';
+import { Ensemble } from '../components/ensemble';
 
 function Acceuil(props)
 {
     const person = props.person;
+    const trn_list = props.trn_list;
 
     return(
         <div className='acceuil'>
@@ -14,6 +17,8 @@ function Acceuil(props)
             <section className="info">
                 <div className="info__container">
                     <TopRankings usr_list={person} />
+                    <Ensemble />
+                    <TournamentView trn_list={trn_list} />
                 </div>
             </section>
         </div>

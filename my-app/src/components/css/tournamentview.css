@@ -1,0 +1,58 @@
+.trnView {
+    width: 20vw;
+}
+
+.tournamentpreview {
+    margin: 20px 10px;
+    height: 20vh;
+    width: auto;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    text-align  : center;
+    background-color: black;
+    color: white;
+}
+
+.tournamentpreview__title {
+    position: absolute;
+    transition: all .5s ease;
+    bottom: 5%;
+    left: 5%;
+    opacity: 1;
+    z-index: 5;
+}
+
+.tournamentpreview:hover .tournamentpreview__title {
+    bottom: 80%;
+}
+
+.tournamentpreview__content {
+    position: absolute;
+    transition: all 1s ease;
+    bottom: -55%;
+    left: 5%;
+    z-index: 5;
+    text-align: start;
+}
+
+.tournamentpreview:hover .tournamentpreview__content {
+    bottom: 5%;
+}
+
+.tournamentpreview__background_url {
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    transition: all .5s ease;
+    user-select: none;
+}
+
+.tournamentpreview:hover .tournamentpreview__background_url {
+    opacity: 0.5;
+    transform: scale(1.5, 1.5);
+}
