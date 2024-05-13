@@ -44,9 +44,17 @@ function AllRanks({users})
             </div>
         );
     });
+    allusers.unshift(
+        <div className="allranks__line allranks__line__categories">
+            <p className="case allranks__line__name">Nom</p>
+            <p className="case allranks__line__elo1">Elo 1v1</p>
+            <p className="case allranks__line__elo2">Elo 2v2</p>
+        </div>,
+        <div className="separator">&nbsp;</div>
+    );
 
 
-    return <div>{allusers}</div>;
+    return <div className="allranks">{allusers}</div>;
 }
 
 function TopRankingsBoard({users})
