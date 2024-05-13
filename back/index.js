@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { getTable, postInTable, updateInTable } from './airtable.js';
 import jwt from 'jsonwebtoken';
+import { getQueue1v1, getQueue2v2, isAlreadyOneQueing1v1, queueConnect1v1, queueConnect2v2 } from './ranked/queuing.js';
 
 const app = express()
 const port = 3001
@@ -252,6 +253,22 @@ async function getTag(email)
     const users = await getUserByEmail(email);
     const tags = users.fields.tag;
     return tags;
+}
+
+async function getQueueMatchs1v1(user)
+{
+    if (isAlreadyOneQueing1v1() == 1) {
+        queueConnect1v1(user, getQueue1v1()[0]);
+    }
+    return 1;
+}
+
+async function getQueueMatchs2v2(user)
+{
+    if (isAlreadyOneQueing2v2() == 1) {
+        const getUsersQueue = getQueue2v2();
+        queueConnect2v2(user, getUsersQueue[0], getUsersQueue[1], getUsersQueue[2])
+    }
 }
 
 export { getUsers };

@@ -1,5 +1,6 @@
 import { updateInTable1v1, updateInTable2v2 } from "../airtable.js";
 import { getUsers } from "../index.js";
+import { createMatch1v1, createMatch2v2 } from "./matchs.js";
 
 function getQueueList()
 {
@@ -57,14 +58,14 @@ function isAlreadyOneQueing2v2()
 
 function queueConnect1v1(user1, user2)
 {
-    // REMOVE QUEUE user1 && user2
     updateInTable1v1(user1, user2, "users", [["tag1", 0]]);
+    createMatch1v1(user1, user2);
 }
 
-function queueConnect1v1(user1, user2, user3, user4)
+function queueConnect2v2(user1, user2, user3, user4)
 {
-    // REMOVE QUEUE user1 && user2 && user3 && user4
     updateInTable2v2(user1.id, user2.id, user3.id, user4.id, "users", [["tag2", tag]])
+    createMatch2v2(user1, user2, user3, user4);
 }
 
-export { getQueue1v1, getQueue2v2, getQueueList, isAlreadyOneQueing1v1, isAlreadyOneQueing2v2 };
+export { getQueue1v1, getQueue2v2, getQueueList, isAlreadyOneQueing1v1, isAlreadyOneQueing2v2, queueConnect1v1, queueConnect2v2 };

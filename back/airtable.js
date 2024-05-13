@@ -173,5 +173,30 @@ function updateInTable2v2(ElementID1, ElementID2, ElementID3, ElementID4, table,
     });
 }
 
+function createInTable(table, data)
+{
+    const obj = {};
 
-export { getTable, postInTable, updateInTable, updateInTable1v1, updateInTable2v2 };
+    data.forEach(item => {
+        const key = item[0];
+        const value = item[1];
+        obj[key] = value;
+    });
+
+    base(table).create([
+        {
+            "fields": obj,
+        }
+    ], function(err, records) {
+        if (err) {
+            console.error(err);
+            return;
+        }
+        records.forEach(function (record) {
+            console.log(record.getId());
+        });
+    });
+}
+
+
+export { getTable, postInTable, updateInTable, updateInTable1v1, updateInTable2v2, createInTable };
