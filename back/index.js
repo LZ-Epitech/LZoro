@@ -84,9 +84,14 @@ app.get('/profils', verifyToken, async (req, res) => {
     }
     res.json(profil);
 })
-app.post('/users/tag', async (req, res) =>{
-    const { email } = req.body;
-    const tag = await setTag(email);
+app.post('/users/tag1', async (req, res) =>{
+    const { email, tags1 } = req.body;
+    const tag = await setTag1(email, parseInt(tags1));
+    res.json(tag);
+})
+app.post('/users/tag2', async (req, res) =>{
+    const { email, tags2 } = req.body;
+    const tag = await setTag2(email, parseInt(tags2));
     res.json(tag);
 })
 app.get('/users/get/tags', async (req, res) =>{
@@ -231,16 +236,15 @@ async function getProfil(email)
     return profil;
 }
 
-async function setTag(user)
+async function setTag1(user, tag)
 {
     const users = await getUserByEmail(user);
-    if (users.fields.tag == 0) {
-            return updateInTable(users.id, "users",  [["tag", 1]]);
-    }
-    if (users.fields.tag == 1) {
-            return updateInTable(users.id, "users", [["tag", 0]]);
-    }
-    return null;
+    return updateInTable(users.id, "users", [["tag1", tag]]);
+}
+async function setTag2(user, tag)
+{
+    const users = await getUserByEmail(user);
+    return updateInTable(users.id, "users", [["tag2", tag]]);
 }
 
 async function getTag(email)

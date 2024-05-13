@@ -47,6 +47,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
     font-size: 50px;
     width: 50vw;
     height: 50vh;
