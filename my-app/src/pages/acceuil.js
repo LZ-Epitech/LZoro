@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
         const getInfo = async () => {
         try {
             // const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3001/users', {
+            const response = await fetch('http://localhost:3001/users/by/elo', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
