@@ -1,11 +1,11 @@
 import Airtable from 'airtable';
 
-const apiKey = process.env.API_KEY
+const APIKEY = "pati03tXLIyNErENB.23c5d11e76903f964781771029971b5b646f660b3d090edcf2fc5ccd962b2d66"
 
 function getTable(table) {
     Airtable.configure({
         endpointUrl: 'https://api.airtable.com',
-        apiKey: apiKey
+        apiKey: APIKEY
     });
     var base = Airtable.base('appBAcxHY6p1Dpv3p');
     let reco = [];
@@ -32,7 +32,7 @@ function getTable(table) {
 
 function postInTable(table, data)
 {
-    var base = new Airtable({apiKey: apiKey}).base('appBAcxHY6p1Dpv3p');
+    var base = new Airtable({apiKey: APIKEY}).base('appBAcxHY6p1Dpv3p');
 
     const obj = {};
     data.forEach(item => {
@@ -59,4 +59,38 @@ function postInTable(table, data)
     });
 }
 
-export { getTable, postInTable };
+function updateInTable(ElementID, table, data)
+{
+    var base = new Airtable({apiKey: APIKEY}).base('appBAcxHY6p1Dpv3p');
+    console.log("===========================");
+    console.log(data);
+    console.log("===========================");
+
+    const obj = {};
+    data.forEach(item => {
+        const key = item[0];
+        const value = item[1];
+        obj[key] = value;
+    });
+    base(table).update([
+        {
+            "id": ElementID,
+            "fields": obj,
+        }
+    ], function(err, records) {
+        if (err) {
+            console.error(err);
+            return null;
+        }
+        if (records && records.length > 0) {
+            const firstRecordId = records[0].getId();
+            return firstRecordId;
+        } else {
+            console.log('Aucun enregistrement créé.');
+            return;
+        }
+    });
+}
+
+
+export { getTable, postInTable, updateInTable };

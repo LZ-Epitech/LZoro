@@ -1,10 +1,11 @@
 import express from 'express';
 import cors from 'cors';
-import { getTable, postInTable } from './airtable.js';
+import { getTable, postInTable, updateInTable } from './airtable.js';
 import jwt from 'jsonwebtoken';
 
 const app = express()
 const port = 3001
+app.use(express.json());
 
 app.use(cors())
 
@@ -22,7 +23,11 @@ const verifyToken = (req, res, next) => {
     }
 };
 
-
+app.get('/user', async (req, res) => {
+    const { email } = req.query;
+    const user = await getUserByEmail(email);
+    res.json(user);
+})
 app.get('/users', async (req, res) => {
     const users = await getUsers();
     res.json(users);
@@ -79,10 +84,35 @@ app.get('/profils', verifyToken, async (req, res) => {
     }
     res.json(profil);
 })
+app.post('/users/tag', async (req, res) =>{
+    const { email } = req.body;
+    const tag = await setTag(email);
+    res.json(tag);
+})
+app.get('/users/get/tags', async (req, res) =>{
+    console.log(req);
+    const { email } = req.query;
+    const tag = await getTag(email);
+    res.json(tag);
+})
+
 app.listen(port, () => {
     console.log(`Node.JS server launched on port [${port}] : http://localhost:${port}`)
 })
 
+
+async function getUserByEmail(email)
+{
+    try {
+        const users = await getTable("users");
+        for (let i = 0; users[i] !== null; i++)
+            if (users[i].fields.email === email)
+                return users[i];
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        return [];
+    }
+}
 async function getUsers()
 {
     try {
@@ -199,4 +229,23 @@ async function getProfil(email)
     const users = await getUsers();
     const profil = users.find(user => user.fields.email === email);
     return profil;
+}
+
+async function setTag(user)
+{
+    const users = await getUserByEmail(user);
+    if (users.fields.tag == 0) {
+            return updateInTable(users.id, "users",  [["tag", 1]]);
+    }
+    if (users.fields.tag == 1) {
+            return updateInTable(users.id, "users", [["tag", 0]]);
+    }
+    return null;
+}
+
+async function getTag(email)
+{
+    const users = await getUserByEmail(email);
+    const tags = users.fields.tag;
+    return tags;
 }
