@@ -1,5 +1,9 @@
 .Nav {
     font-size: 20px;
+    position: fixed;
+    top: 0;
+    background-color: red;
+    z-index: 9999;
 }
 
 .link {

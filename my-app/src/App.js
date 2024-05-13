@@ -5,6 +5,7 @@ import Acceuil from './pages/acceuil.js';
 import Tournament  from './pages/tournament.js';
 import Profil from './pages/Profil.js';
 import Ranked from './pages/ranked.js';
+import NoPage from './pages/NoPage.js';
 
 function App()
 {
@@ -17,6 +18,7 @@ function App()
                     <Route path="/profil" element={<Profil />} />
                     <Route path="/ranked" element={<Ranked />} />
                     <Route path="/tournaments" element={<Tournament />} />
+                    <Route path="*" element={<NoPage />} />
                 </Routes>
             </BrowserRouter>
         </div>
