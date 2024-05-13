@@ -11,7 +11,6 @@ function getTable(table) {
     let reco = [];
 
     return new Promise((resolve, reject) => {
-
         base(table).select({
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
@@ -62,9 +61,9 @@ function postInTable(table, data)
 function updateInTable(ElementID, table, data)
 {
     var base = new Airtable({apiKey: APIKEY}).base('appBAcxHY6p1Dpv3p');
-    console.log("===========================");
+    console.log("=============");
     console.log(data);
-    console.log("===========================");
+    console.log("=============");
 
     const obj = {};
     data.forEach(item => {
@@ -92,5 +91,87 @@ function updateInTable(ElementID, table, data)
     });
 }
 
+function updateInTable1v1(ElementID1, ElementID2, table, data)
+{
+    var base = new Airtable({apiKey: APIKEY}).base('appBAcxHY6p1Dpv3p');
+    console.log("=============");
+    console.log(data);
+    console.log("=============");
 
-export { getTable, postInTable, updateInTable };
+    const obj = {};
+    data.forEach(item => {
+        const key = item[0];
+        const value = item[1];
+        obj[key] = value;
+    });
+    base(table).update([
+        {
+            "id": ElementID1,
+            "fields": obj,
+        },
+        {
+            "id": ElementID2,
+            "fields": obj,
+        },
+    ], function(err, records) {
+        if (err) {
+            console.error(err);
+            return null;
+        }
+        if (records && records.length > 0) {
+            const firstRecordId = records[0].getId();
+            return firstRecordId;
+        } else {
+            console.log('Aucun enregistrement créé.');
+            return;
+        }
+    });
+}
+
+function updateInTable2v2(ElementID1, ElementID2, ElementID3, ElementID4, table, data)
+{
+    var base = new Airtable({apiKey: APIKEY}).base('appBAcxHY6p1Dpv3p');
+    console.log("=============");
+    console.log(data);
+    console.log("=============");
+
+    const obj = {};
+    data.forEach(item => {
+        const key = item[0];
+        const value = item[1];
+        obj[key] = value;
+    });
+    base(table).update([
+        {
+            "id": ElementID1,
+            "fields": obj,
+        },
+        {
+            "id": ElementID2,
+            "fields": obj,
+        },
+        {
+            "id": ElementID3,
+            "fields": obj,
+        },
+        {
+            "id": ElementID4,
+            "fields": obj,
+        },
+    ], function(err, records) {
+        if (err) {
+            console.error(err);
+            return null;
+        }
+        if (records && records.length > 0) {
+            const firstRecordId = records[0].getId();
+            return firstRecordId;
+        } else {
+            console.log('Aucun enregistrement créé.');
+            return;
+        }
+    });
+}
+
+
+export { getTable, postInTable, updateInTable, updateInTable1v1, updateInTable2v2 };
