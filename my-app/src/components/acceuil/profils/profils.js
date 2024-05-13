@@ -3,7 +3,6 @@ import '../css/profils.css'
 function ProfilMinComponent(s)
 {
     const props = s.persons;
-    console.log(s);
 
     return(
         <div className="profilmin">

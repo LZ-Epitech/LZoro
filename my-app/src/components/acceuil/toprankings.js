@@ -2,13 +2,22 @@ import { useEffect, useState } from 'react';
 import top3img from '../../Frame 2.svg';
 import './css/toprankings.css';
 import { ProfilHead, ProfilMinComponent } from './profils/profils.js';
+import { getUsersByElo } from '../../providers/getUsers.js';
 
-function TopRankings({dataUsers}) {
+function TopRankings() {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        setUsers(dataUsers);
-    }, [dataUsers]);
+        const fetchData = async () => {
+            try {
+                const usersData = await getUsersByElo();
+                setUsers(usersData);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, []);
 
     function three(dataUsers) {
         let lgt = Math.min(3, dataUsers.length);
@@ -23,7 +32,7 @@ function TopRankings({dataUsers}) {
         return first3;
     }
 
-    const usersWithPlace = three(dataUsers);
+    const usersWithPlace = three(users);
 
     const list = usersWithPlace.map((user, index) => (
         <ProfilMinComponent key={user.fields.email} persons={user.fields} />
