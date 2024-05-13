@@ -23,7 +23,6 @@ import { TournamentView } from "../components/acceuil/tournamentview";
             }
             const data = await response.json();
             setDataTournament(data);
-            console.log(data);
         } catch (error) {
             console.log(error);
         } finally {}};

@@ -1,5 +1,5 @@
 import './css/acceuil.css';
-// import TopRankings from '../components/acceuil/toprankings';
+import TopRankings from '../components/acceuil/toprankings';
 // import { TournamentView } from '../components/acceuil/tournamentview';
 import { Ensemble } from '../components/acceuil/ensemble';
 import { useEffect, useState } from 'react';
@@ -28,7 +28,6 @@ import { useEffect, useState } from 'react';
             }
             const data = await response.json();
             setDataUsers(data);
-            console.log(data);
         } catch (error) {
             console.log(error);
         } finally {
@@ -36,12 +35,9 @@ import { useEffect, useState } from 'react';
         };
 
         getInfo();
-
-        // Cleanup function
-        return () => {
-        // Optionally perform cleanup here, such as aborting ongoing requests
-        };
+        return () => {};
     }, []);
+
      return(
          <div className='acceuil'>
              <section className="title">
@@ -50,7 +46,11 @@ import { useEffect, useState } from 'react';
              </section>
              <section className="info">
                  <div className="info__container">
-                     {/* <TopRankings dataUsers={dataUsers} /> */}
+                 {dataUsers.length > 0 ? (
+                        <TopRankings dataUsers={dataUsers} />
+                    ) : (
+                        <p>Loading...</p>
+                    )}
                      <Ensemble />
                      {/* <TournamentView trn_list={trn_list} /> */}
                  </div>

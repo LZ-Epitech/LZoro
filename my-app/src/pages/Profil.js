@@ -20,7 +20,6 @@ function Profil() {
                 }
                 const data = await response.json();
                 setDataProfil(data);
-                console.log(data);
             } catch (error) {
                 console.log(error);
             } finally {}};
