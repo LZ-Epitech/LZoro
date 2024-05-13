@@ -11,6 +11,10 @@ app.get('/users', async (req, res) => {
     const users = await getUsers();
     res.json(users);
 })
+app.get('/users/by/elo', async (req, res) => {
+    const users = await getUsersFilteredByElo();
+    res.json(users);
+})
 app.get('/tournaments', async (req, res) => {
     const tournaments = await getTournaments();
     res.json(tournaments);
@@ -47,7 +51,13 @@ async function getUsers()
         return [];
     }
 }
+async function getUsersFilteredByElo()
+{
+    const users = await getUsers();
+    const sortedUsers = users.sort((a, b) => (b.fields.elo1v1 + b.fields.elo2v2) - (a.fields.elo1v1 + a.fields.elo2v2));
 
+    return sortedUsers;
+}
 async function getTournaments()
 {
     try {
