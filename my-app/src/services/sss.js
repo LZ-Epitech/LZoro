@@ -1,4 +1,3 @@
-
 function getAPI(method, routes, data)
 {
     useEffect(() => {

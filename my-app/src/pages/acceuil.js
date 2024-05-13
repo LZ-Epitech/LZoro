@@ -1,7 +1,7 @@
- import './css/acceuil.css';
- import TopRankings from '../components/acceuil/toprankings';
- import { TournamentView } from '../components/acceuil/tournamentview';
- import { Ensemble } from '../components/acceuil/ensemble';
+import './css/acceuil.css';
+import TopRankings from '../components/acceuil/toprankings';
+import { TournamentView } from '../components/acceuil/tournamentview';
+import { Ensemble } from '../components/acceuil/ensemble';
 import { useEffect, useState } from 'react';
 
  function Acceuil()
@@ -21,7 +21,6 @@ import { useEffect, useState } from 'react';
                 'Content-Type': 'application/json',
 
             },
-            // body: JSON.stringify(data),
             });
 
             if (!response.ok) {
@@ -51,7 +50,7 @@ import { useEffect, useState } from 'react';
              </section>
              <section className="info">
                  <div className="info__container">
-                     <TopRankings dataUsers={dataUsers} />
+                     {/* <TopRankings dataUsers={dataUsers} /> */}
                      <Ensemble />
                      {/* <TournamentView trn_list={trn_list} /> */}
                  </div>
