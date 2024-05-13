@@ -1,11 +1,45 @@
 .Nav {
-    font-size: 20px;
-    position: fixed;
-    top: 0;
-    background-color: red;
-    z-index: 9999;
+    background-color: #000814;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px;
 }
 
-.link {
-    padding: 5px;
+.link, .site-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 30px;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 30px;
+    transition: transform 0.3s ease;
+}
+
+.site-link {
+    font-size: 45px;
+    margin-right: 10px;
+    margin-right: auto;
+}
+
+.link:hover, .site-link:hover {
+    transform: scale(1.1);
+}
+
+.link:hover {
+    color: #ffc300;
+}
+
+.login-button {
+    background-color: #7289da;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #5f73bc;
 }
