@@ -24,7 +24,15 @@ function Ranked() {
 
     return (
         <div>
-            {isLoading ? ( <p>Loading...</p> ) : ( <TopRankingsBoard users={users} /> )}
+            <section className="topRankings">
+                {isLoading ? ( <p>Loading...</p> ) : ( <TopRankingsBoard users={users} /> )}
+            </section>
+            {/* <section className="queue">
+                {isLoading ? ( <p>Loading...</p> ) : ( <TopRankingsBoard users={users} /> )}
+            </section>
+            <section className="lastMatchs">
+                {isLoading ? ( <p>Loading...</p> ) : ( <TopRankingsBoard users={users} /> )}
+            </section> */}
         </div>
     )
 }
