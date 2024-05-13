@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './css/tournamentview.css';
 import { getTournament } from '../../providers/getTournament';
+import { Link } from 'react-router-dom';
 
 function TournamentPreview({dataTournament})
 {
@@ -76,14 +77,14 @@ function TournamentView()
     });
 
     return(
-        <div className="tournamentview">
+        <Link className="tournamentview" to="/tournaments">
             <h2 className="tournamentview__title">
                 Tournaments
             </h2>
             <div className="tournamentview__content">
                 {list}
             </div>
-        </div>
+        </Link>
     );
 }
 

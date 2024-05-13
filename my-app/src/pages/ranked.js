@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import TopRankingsBoard from "../components/ranked/TopRankingsBoard";
 import { getUsersByElo } from "../providers/getUsers";
 import './css/ranked.css';
+import Queue from "../components/ranked/Queue";
 
 function Ranked() {
     const [users, setUsers] = useState([]);
@@ -46,7 +47,7 @@ function Ranked() {
             case 2:
                 return (
                     <section className="queue">
-                        {isLoading ? ( <p>Loading...</p> ) : ( <p>QUEUE</p> )}
+                        {isLoading ? ( <p>Loading...</p> ) : ( <Queue />)}
                     </section>
                 );
                 break;

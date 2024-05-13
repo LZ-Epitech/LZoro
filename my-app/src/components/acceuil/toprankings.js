@@ -3,6 +3,7 @@ import top3img from '../../Frame 2.svg';
 import './css/toprankings.css';
 import { ProfilHead, ProfilMinComponent } from './profils/profils.js';
 import { getUsersByElo } from '../../providers/getUsers.js';
+import { Link } from 'react-router-dom';
 
 function TopRankings() {
     const [users, setUsers] = useState([]);
@@ -43,14 +44,14 @@ function TopRankings() {
     ));
 
     return (
-        <div className="toprankings">
+        <Link className="toprankings" to="/ranked">
             <h2 className="toprankings__title">Top Rankings</h2>
             <div className="top3">
                 <img src={top3img} alt="Top 3" />
                 {listtop3}
             </div>
             {list}
-        </div>
+        </Link>
     );
 }
 

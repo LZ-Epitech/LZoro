@@ -1,6 +1,8 @@
 .tournamentview {
     width: 20vw;
     margin: 5vh 1vh;
+    text-decoration: none;
+    color: black;
 }
 
 .tournamentviewforpage__content {
