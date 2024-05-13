@@ -1,9 +1,11 @@
 import Airtable from 'airtable';
 
+const apiKey = process.env.API_KEY
+
 function getTable(table) {
     Airtable.configure({
         endpointUrl: 'https://api.airtable.com',
-        apiKey: 'pati03tXLIyNErENB.23c5d11e76903f964781771029971b5b646f660b3d090edcf2fc5ccd962b2d66'
+        apiKey: apiKey
     });
     var base = Airtable.base('appBAcxHY6p1Dpv3p');
     let reco = [];
@@ -30,7 +32,7 @@ function getTable(table) {
 
 function postInTable(table, data)
 {
-    var base = new Airtable({apiKey: '23c5d11e76903f964781771029971b5b646f660b3d090edcf2fc5ccd962b2d66'}).base('appBAcxHY6p1Dpv3p');
+    var base = new Airtable({apiKey: apiKey}).base('appBAcxHY6p1Dpv3p');
 
     const obj = {};
     data.forEach(item => {
