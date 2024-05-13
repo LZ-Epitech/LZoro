@@ -3,67 +3,26 @@ import TopRankings from '../components/acceuil/toprankings';
 import { TournamentView } from '../components/acceuil/tournamentview';
 import { Ensemble } from '../components/acceuil/ensemble';
 import { useEffect, useState } from 'react';
+import { getUsersByElo } from '../providers/getUsers';
+import { getTournament } from '../providers/getTournament';
 
- function Acceuil()
- {
-    //  const person = props.person;
-    //  const trn_list = props.trn_list;
-    const [dataUsers, setDataUsers] = useState([]);
-    const [tournament, setTournament] = useState([]);
+function Acceuil()
+{
+    return(
+        <div className='acceuil'>
+            <section className="title">
+                <img className="image-title" alt="baby-foot background" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.directachat56.fr%2FFiles%2F31462%2FImg%2F19%2Fbaby-foot-sportivo-05-zoom.jpg&f=1&nofb=1&ipt=459c2f4f07421aa68dd01cd733dceca6e68967243b9f36f281c7facf175d2c8f&ipo=images" />
+                <h1>LZoro - Baby-Foot</h1>
+            </section>
+            <section className="info">
+                <div className="info__container">
+                    <TopRankings />
+                    <Ensemble />
+                    <TournamentView />
+                </div>
+            </section>
+        </div>
+    );
+}
 
-    useEffect(() => {
-        const getInfo = async () => {
-        try {
-            // const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3001/users/by/elo', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-
-            },
-            });
-            const responses = await fetch('http://localhost:3001/tournaments', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                });
-            if (!response.ok || !responses.ok) {
-                throw new Error('Failed to fetch data');
-            }
-            const data = await response.json();
-            const datas = await responses.json();
-            setDataUsers(data);
-            setTournament(datas);
-        } catch (error) {
-            console.log(error);
-        } finally {
-        }
-        };
-
-        getInfo();
-        return () => {};
-    }, []);
-
-     return(
-         <div className='acceuil'>
-             <section className="title">
-                 <img className="image-title" alt="baby-foot background" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.directachat56.fr%2FFiles%2F31462%2FImg%2F19%2Fbaby-foot-sportivo-05-zoom.jpg&f=1&nofb=1&ipt=459c2f4f07421aa68dd01cd733dceca6e68967243b9f36f281c7facf175d2c8f&ipo=images" />
-                 <h1>LZoro - Baby-Foot</h1>
-             </section>
-             <section className="info">
-                 <div className="info__container">
-                 {dataUsers.length > 0 ? (
-                        <TopRankings dataUsers={dataUsers} />
-                    ) : (
-                        <p>Loading...</p>
-                    )}
-                     <Ensemble />
-                     <TournamentView dataTournament={tournament} />
-                 </div>
-             </section>
-         </div>
-     );
- }
-
- export default Acceuil;
+export default Acceuil;

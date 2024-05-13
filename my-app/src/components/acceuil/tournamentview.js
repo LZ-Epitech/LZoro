@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './css/tournamentview.css';
+import { getTournament } from '../../providers/getTournament';
 
 function TournamentPreview({dataTournament})
 {
@@ -53,8 +54,23 @@ function TournamentPreviewForView({dataTournament, setActive})
     );
 }
 
-function TournamentView({dataTournament})
+function TournamentView()
 {
+    const [dataTournament, setDataTournament] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const tournamentData = await getTournament();
+                setDataTournament(tournamentData);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, []); ;
+
     const list = dataTournament.map(tournoi => {
         return <TournamentPreview key={tournoi.id} dataTournament={tournoi} />
     });
