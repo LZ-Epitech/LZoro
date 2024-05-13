@@ -51,8 +51,17 @@ app.get('/api/users/login', async (req, res) => {
     res.json(matchs);
 })
 app.get('/profils', verifyToken, async (req, res) => {
-    const userEmail = req.user.email;
-    const profil = await getProfil(userEmail);
+    try {
+        const userEmail = req.user.email;
+        const profil = await getProfil(userEmail);
+        if (!profil) {
+            return res.status(404).json({ message: 'Profil not found' });
+        }
+        res.json(profil);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
     res.json(profil);
 })
 app.listen(port, () => {
