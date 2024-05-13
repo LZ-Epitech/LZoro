@@ -1,6 +1,6 @@
 import './css/acceuil.css';
 import TopRankings from '../components/acceuil/toprankings';
-// import { TournamentView } from '../components/acceuil/tournamentview';
+import { TournamentView } from '../components/acceuil/tournamentview';
 import { Ensemble } from '../components/acceuil/ensemble';
 import { useEffect, useState } from 'react';
 
@@ -9,10 +9,10 @@ import { useEffect, useState } from 'react';
     //  const person = props.person;
     //  const trn_list = props.trn_list;
     const [dataUsers, setDataUsers] = useState([]);
+    const [tournament, setTournament] = useState([]);
 
     useEffect(() => {
         const getInfo = async () => {
-
         try {
             // const token = localStorage.getItem('token');
             const response = await fetch('http://localhost:3001/users', {
@@ -22,12 +22,19 @@ import { useEffect, useState } from 'react';
 
             },
             });
-
-            if (!response.ok) {
-            throw new Error('Failed to fetch data');
+            const responses = await fetch('http://localhost:3001/tournaments', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                });
+            if (!response.ok || !responses.ok) {
+                throw new Error('Failed to fetch data');
             }
             const data = await response.json();
+            const datas = await responses.json();
             setDataUsers(data);
+            setTournament(datas);
         } catch (error) {
             console.log(error);
         } finally {
@@ -52,7 +59,7 @@ import { useEffect, useState } from 'react';
                         <p>Loading...</p>
                     )}
                      <Ensemble />
-                     {/* <TournamentView trn_list={trn_list} /> */}
+                     <TournamentView trn_list={tournament} />
                  </div>
              </section>
          </div>
