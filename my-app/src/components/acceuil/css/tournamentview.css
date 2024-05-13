@@ -1,6 +1,11 @@
 .tournamentview {
     width: 20vw;
-    margin: 5vh 0;
+    margin: 5vh 1vh;
+}
+
+.tournamentviewforpage__content {
+    overflow: scroll;
+    height: 80vh;
 }
 
 .tournamentpreview {
@@ -66,7 +71,7 @@
 .tournamentview__title::after {
     background-color: black;
     height: 5px;
-    width: 25%;
+    width: 2.5em;
     content: "";
     display: flex;
     border-radius: 5px;
