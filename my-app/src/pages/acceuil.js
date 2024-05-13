@@ -59,7 +59,7 @@ import { useEffect, useState } from 'react';
                         <p>Loading...</p>
                     )}
                      <Ensemble />
-                     <TournamentView trn_list={tournament} />
+                     <TournamentView dataTournament={tournament} />
                  </div>
              </section>
          </div>

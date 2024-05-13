@@ -1,0 +1,13 @@
+.tournamentdetails__title {
+    position: relative;
+}
+
+.tournamentdetails__title::after {
+    background-color: black;
+    height: 5px;
+    width: 2.5em; /* Assurez-vous que la largeur est à 100% pour remplir le conteneur parent */
+    content: ""; /* Ajoutez ceci pour que le pseudo-élément soit généré */
+    display: block;
+    border-radius: 5px;
+    transition: all ease .2s;
+}
