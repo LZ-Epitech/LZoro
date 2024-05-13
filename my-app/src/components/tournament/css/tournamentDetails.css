@@ -43,6 +43,14 @@
     font-size: 50px;
 }
 
+.noselected {
+    font-size: 50px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
 .iscriptionbutton {
     position: absolute;
     font-size: 25px;

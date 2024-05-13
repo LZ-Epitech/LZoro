@@ -1,26 +1,43 @@
 import { useEffect, useState } from "react";
 import TopRankingsBoard from "../components/ranked/TopRankingsBoard";
-import { getUsersByElo } from "../providers/getUsers";
+import { getUserByEmail, getUsers, getUsersByElo } from "../providers/getUsers";
 import './css/ranked.css';
 import Queue from "../components/ranked/Queue";
+import setTag from "../providers/setUsers";
 
 function Ranked() {
     const [users, setUsers] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [activeBoard, setActiveBoard] = useState(0);
+    const [isLoading, setIsLoading] = useState(0);
+    const [activeBoard, setActiveBoard] = useState(1);
+    const [activeUser, setActiveUser] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const usersData = await getUsersByElo();
                 setUsers(usersData);
-                setIsLoading(false);
+                let load = isLoading + 1;
+                setIsLoading(load);
             } catch (error) {
                 console.log(error);
             }
         };
         fetchData();
     }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const userActive = await getUsers();
+                setActiveUser(userActive[0]);
+                let load = isLoading + 1;
+                setIsLoading(load);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchData();
+    }, [])
 
     const selectTopRanks = () => {
         setActiveBoard(1);
@@ -31,6 +48,7 @@ function Ranked() {
     const selectLastMatchs = () => {
         setActiveBoard(3);
     }
+
     const sectionSelector = displaySelect(activeBoard);
 
     function displaySelect(selector)
@@ -39,21 +57,21 @@ function Ranked() {
             case 1:
                 return (
                     <section className="topRankings">
-                        {isLoading ? ( <p>Loading...</p> ) : ( <TopRankingsBoard users={users} /> )}
+                        {isLoading > 2 ? ( <p>Loading...</p> ) : ( <TopRankingsBoard users={users} /> )}
                     </section>
                 );
                 break;
             case 2:
                 return (
                     <section className="queue">
-                        {isLoading ? ( <p>Loading...</p> ) : ( <Queue />)}
+                        {isLoading > 2 ? ( <p>Loading...</p> ) : ( <Queue activeUser={activeUser} setActiveUser={setActiveUser} />)}
                     </section>
                 );
                 break;
             case 3:
                 return (
                     <section className="lastMatchs">
-                        {isLoading ? ( <p>Loading...</p> ) : ( <p>LASTMATCHS</p> )}
+                        {isLoading > 2 ? ( <p>Loading...</p> ) : ( <p>LASTMATCHS</p> )}
                     </section>
                 );
                 break;
