@@ -5,6 +5,19 @@
     color: black;
 }
 
+.tournamentview::-webkit-scrollbar {
+    width: 0;
+}
+
+.tournamentview_forpage {
+    width: 20vw;
+    margin-right: 2vw;
+}
+
+.tournamentview_forpage::-webkit-scrollbar {
+    width: 0;
+}
+
 .tournamentviewforpage__content {
     overflow: scroll;
     height: 80vh;

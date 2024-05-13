@@ -95,7 +95,7 @@ function TournamentViewForPage({dataTournament, setActive})
     });
 
     return(
-        <div className="tournamentview">
+        <div className="tournamentview_forpage">
             <h2 className="tournamentview__title">
                 Tournaments
             </h2>

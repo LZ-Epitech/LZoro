@@ -15,7 +15,6 @@ function Ranked() {
                 const usersData = await getUsersByElo();
                 setUsers(usersData);
                 setIsLoading(false);
-                console.log(usersData);
             } catch (error) {
                 console.log(error);
             }
