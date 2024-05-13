@@ -253,3 +253,5 @@ async function getTag(email)
     const tags = users.fields.tag;
     return tags;
 }
+
+export { getUsers };
