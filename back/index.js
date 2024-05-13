@@ -1,12 +1,27 @@
 import express from 'express';
 import cors from 'cors';
-import getTable from './airtable.js';
+import { getTable, postInTable } from './airtable.js';
 import jwt from 'jsonwebtoken';
 
 const app = express()
 const port = 3001
 
 app.use(cors())
+
+const verifyToken = (req, res, next) => {
+    const token = req.headers.authorization;
+    if (!token) {
+        return res.status(401).json({ message: 'No token provided' });
+    }
+    try {
+        const decoded = jwt.verify(token, 'votre_secret_key');
+        req.user = decoded;
+        next();
+    } catch (error) {
+        return res.status(401).json({ message: 'Invalid token' });
+    }
+};
+
 
 app.get('/users', async (req, res) => {
     const users = await getUsers();
@@ -178,19 +193,6 @@ async function logIn(username, password)
 
     return req.json({ token });
 }
-const verifyToken = (req, res, next) => {
-    const token = req.headers.authorization;
-    if (!token) {
-        return res.status(401).json({ message: 'No token provided' });
-    }
-    try {
-        const decoded = jwt.verify(token, 'votre_secret_key');
-        req.user = decoded;
-        next();
-    } catch (error) {
-        return res.status(401).json({ message: 'Invalid token' });
-    }
-};
 
 async function getProfil(email)
 {
