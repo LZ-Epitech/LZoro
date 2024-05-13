@@ -30,11 +30,31 @@ function TopThree({users})
     );
 }
 
+function AllRanks({users})
+{
+    let allusers = users.map((user, index) => {
+        const isEven = index % 2 === 0;
+        const className = isEven ? 'allranks__line pair' : 'allranks__line impair';
+
+        return (
+            <div className={className}>
+                <p className="case allranks__line__name">{user.fields.name}</p>
+                <p className="case allranks__line__elo1">{user.fields.elo1v1}</p>
+                <p className="case allranks__line__elo2">{user.fields.elo2v2}</p>
+            </div>
+        );
+    });
+
+
+    return <div>{allusers}</div>;
+}
+
 function TopRankingsBoard({users})
 {
     return (
         <div className="toprankingsboard">
             <TopThree users={users} />
+            <AllRanks users={users} />
         </div>
     );
 }

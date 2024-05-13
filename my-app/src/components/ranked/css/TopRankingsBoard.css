@@ -31,3 +31,21 @@
 .toprankingsboard {
     width: 80vw;
 }
+
+.allranks__line {
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.pair {
+    background-color: #fff;
+}
+
+.case {
+    width: 500px;
+}
+
+.impair {
+    background-color: #eee;
+}
