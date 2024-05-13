@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { getTable, postInTable, updateInTable } from './airtable.js';
 import jwt from 'jsonwebtoken';
-import { getQueue1v1, getQueue2v2, isAlreadyOneQueing1v1, queueConnect1v1, queueConnect2v2 } from './ranked/queuing.js';
+import { getQueue1v1, getQueue2v2, isAlreadyOneQueing1v1, isAlreadyOneQueing2v2, queueConnect1v1, queueConnect2v2 } from './ranked/queuing.js';
 
 const app = express()
 const port = 3001
@@ -185,7 +185,7 @@ async function getMatchs()
     try {
         return await getTable("matchs");
     } catch (error) {
-        console.error('Error fetching tournoi:', error);
+        console.error('Error fetching matchs:', error);
         return [];
     }
 }
@@ -248,6 +248,11 @@ async function setTag2(user, tag)
     return updateInTable(users.id, "users", [["tag2", tag]]);
 }
 
+// async function searchForMatchs1v1(user, tag, format)
+// {
+//     if (format )
+// }
+
 async function getTag(email)
 {
     const users = await getUserByEmail(email);
@@ -257,18 +262,20 @@ async function getTag(email)
 
 async function getQueueMatchs1v1(user)
 {
-    if (isAlreadyOneQueing1v1() == 1) {
-        queueConnect1v1(user, getQueue1v1()[0]);
+    const getUsersQueue = getQueue1v1()
+    if (isAlreadyOneQueing1v1() === 1 && !getUsersQueue.has(user.id)) {
+        queueConnect1v1(user, getUsersQueue[0]);
     }
     return 1;
 }
 
 async function getQueueMatchs2v2(user)
 {
-    if (isAlreadyOneQueing2v2() == 1) {
-        const getUsersQueue = getQueue2v2();
+    const getUsersQueue = getQueue2v2();
+    if (isAlreadyOneQueing2v2() === 1 && !getUsersQueue.has(user.id)) {
         queueConnect2v2(user, getUsersQueue[0], getUsersQueue[1], getUsersQueue[2])
     }
+    return 1;
 }
 
 export { getUsers };
