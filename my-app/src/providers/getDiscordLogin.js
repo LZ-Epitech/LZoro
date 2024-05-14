@@ -1,22 +1,16 @@
-const getDiscord = async (code) => {
-    console.log(JSON.stringify({ 'code': code }));
+async function fetchDiscordUser(token) {
     try {
-        const response = await fetch('http://localhost:3001/discord/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ 'code': code }),
-        });
-        if (!response.ok) {
-            throw new Error('Failed to fetch data');
+        const response = await fetch(`/discord/user?token=${token}`);
+        if (response.ok) {
+            const userData = await response.json();
+            console.log(userData);
+        } else {
+            throw new Error('Impossible de récupérer les informations de l\'utilisateur Discord.');
         }
-        const data = await response.json();
-        return data;
     } catch (error) {
-        console.log(error);
-    } finally {}
-};
+        console.error(error);
+    }
+}
 
 function getAuthorizationCodeFromURL() {
     if (hasAuthorizationCodeInURL()) {
@@ -35,4 +29,4 @@ function hasAuthorizationCodeInURL() {
     return queryString.includes('code=');
 }
 
-export { getAuthorizationCodeFromURL, getDiscord };
+export { getAuthorizationCodeFromURL, fetchDiscordUser };
