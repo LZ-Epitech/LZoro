@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './css/nav.css';
-import { fetchDiscordUser } from '../../providers/getDiscordLogin';
+import { getDiscordUser } from '../../providers/getDiscordLogin';
 
 function Nav() {
     const [discordUser, setDiscordUser] = useState(null);
@@ -12,7 +12,7 @@ function Nav() {
             const accessToken = urlParams.get('access_token');
             if (accessToken) {
                 localStorage.setItem('token', accessToken);
-                const user = await fetchDiscordUser(accessToken);
+                const user = await getDiscordUser(accessToken);
                 setDiscordUser(user);
         }
         };

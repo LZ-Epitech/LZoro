@@ -7,7 +7,7 @@ import Profil from './pages/Profil.js';
 import Ranked from './pages/ranked.js';
 import NoPage from './pages/NoPage.js';
 import { useEffect } from 'react';
-import { fetchDiscordUser } from './providers/getDiscordLogin.js';
+import { getDiscordUser } from './providers/getDiscordLogin.js';
 import { createUsers } from './providers/setUsers.js';
 
 function App()
@@ -17,7 +17,7 @@ function App()
 
         const checkToken = async () => {
             if (localStorage.getItem('token') != null) {
-                const discordUser = await fetchDiscordUser(localStorage.getItem('token'))
+                const discordUser = await getDiscordUser(localStorage.getItem('token'))
                 console.log(discordUser);
                 if (discordUser == null) {
                     createUsers(localStorage.getItem('token'));
@@ -31,7 +31,7 @@ function App()
             if (params.has("access_token")) {
                 const accessToken = params.get("access_token");
                 localStorage.setItem('token', accessToken);
-                if (fetchDiscordUser(accessToken) == null) {
+                if (getDiscordUser(accessToken) == null) {
                     createUsers(accessToken);
                 }
             }

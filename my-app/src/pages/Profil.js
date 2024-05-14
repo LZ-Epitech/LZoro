@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './css/Profil.css';
 import profilePicture from './pp.jpg';
-import { fetchDiscordUser } from '../providers/getDiscordLogin';
+import { getDiscordUser } from '../providers/getDiscordLogin';
 
 function Profil() {
     const [dataProfil, setDataProfil] = useState(null); // Initialiser à null pour indiquer le chargement
@@ -10,7 +10,7 @@ function Profil() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const user = await fetchDiscordUser(localStorage.getItem('token'));
+                const user = await getDiscordUser(localStorage.getItem('token'));
                 setDataProfil(user);
                 setLoading(false); // Mettre à jour l'état de chargement à false une fois les données reçues
             } catch (error) {
