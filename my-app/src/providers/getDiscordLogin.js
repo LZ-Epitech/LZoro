@@ -1,3 +1,5 @@
+import { getUsers } from "./getUsers";
+
 async function fetchDiscordUser(token) {
     try {
         const response = await fetch(`/discord/user?token=${token}`);
@@ -20,6 +22,7 @@ const getDiscordUser = async (accessToken) => {
     });
     if (response.ok) {
         const user = await response.json();
+        const users = await getUsers();
         console.log(user);
         return user;
     } else {

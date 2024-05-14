@@ -24,11 +24,11 @@ function Profil() {
 
     return (
         <div className="profil-container">
-            {loading ? (
-                <p>Chargement...</p>
+            {!dataProfil ? (
+                <p>Connectez-vous avec Discord !.</p>
             ) : (
                 <>
-                    <h2>Yoyo</h2>
+                    <h2>{dataProfil.global_name}</h2>
                     <img src={`https://cdn.discordapp.com/avatars/${dataProfil.id}/${dataProfil.avatar}.png`} alt="Profil" />
                     <div>
                         <p className='discord'><strong>Discord : {dataProfil.username}</strong></p>
