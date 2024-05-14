@@ -71,6 +71,8 @@ function Queue({activeUser, setActiveUser})
         return(
             <div className="ranked__queue__already">
                 <h3 onClick={close}>Recherche de matchs ...</h3>
+                { tags1 ? <p>1v1</p> : '' }
+                { tags2 ? <p>2v2</p> : '' }
             </div>
         );
     }

@@ -41,9 +41,9 @@ function Nav() {
                 <Link className="link" to="/tournaments">Tournois</Link>
                 <Link className="link" to="/profil">Profil</Link>
                 {discordUser ? (
-                    <div>
-                        <img src={`https://cdn.discordapp.com/avatars/${discordUser.fields.discordID}/${discordUser.fields.avatar}.png`} alt="Discord Avatar" />
-                        <button className="logout-button" onClick={handleLogout}>Logout</button>
+                    <div className='log'>
+                        <img className='ssssss' src={`https://cdn.discordapp.com/avatars/${discordUser.fields.discordID}/${discordUser.fields.avatar}.png`} alt="Discord Avatar" />
+                        <button className="logbtn logout-button" onClick={handleLogout}>Logout</button>
                         <p>{discordUser.username}</p>
                     </div>
                 ) : (
