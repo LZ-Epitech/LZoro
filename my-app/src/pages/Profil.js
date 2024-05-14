@@ -28,7 +28,7 @@ function Profil() {
                 <p>Chargement...</p>
             ) : (
                 <>
-                    <h2>Yoyo</h2>
+                    <h2>{dataProfil.global_name}</h2>
                     <img src={`https://cdn.discordapp.com/avatars/${dataProfil.id}/${dataProfil.avatar}.png`} alt="Profil" />
                     <div>
                         <p className='discord'><strong>Discord : {dataProfil.username}</strong></p>

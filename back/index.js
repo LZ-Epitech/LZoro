@@ -1,9 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import { getTable, postInTable, updateInTable } from './airtable.js';
+import { createInTable, getTable, postInTable, updateInTable } from './airtable.js';
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import querystring from 'querystring';
+import { getUserInfo } from './discord.js';
 
 const app = express()
 const port = 3001
@@ -91,11 +92,11 @@ app.get('/users/get/tags', async (req, res) =>{
     const tag = await getTag(email);
     res.json(tag);
 })
-app.get('/discord/user', async (req, res) => {
-    const { token } = req.query;
-    return await getUserInfo(token);
+app.post('/users/create', async (req, res) => {
+    const { token } = req.body;
+    const newUser = await createUser(token);
+    res.json(newUser);
 })
-
 
 app.post('/discord/login', async (req, res) => {
     const { code } = req.body;
@@ -260,6 +261,20 @@ async function getProfil(email)
     return profil;
 }
 
+async function createUser(token)
+{
+    const user = await getUserInfo(token);
+    const data = JSON.stringify({
+        token: token,
+        name: user.global_name,
+        elo1v1: 500,
+        elo2v2: 500,
+        tag1: 0,
+        tag2: 0,
+    });
+    return createInTable("users", data)
+}
+
 async function setTag1(user, tag)
 {
     const users = await getUserByEmail(user);
@@ -297,31 +312,6 @@ async function getTag(email)
 //     }
 //     return 1;
 // }
-async function getUserInfo(accessToken) {
-    // Créer une requête HTTP GET
-    await fetch('https://discord.com/api/v10/users/@me', {
-        headers: {
-            'Authorization': `Bearer ${accessToken}`
-        }
-    })
-    .then(response => {
-        // Vérifier si la réponse est OK (code de statut 200)
-        if (response.ok) {
-            // Récupérer les données JSON de la réponse
-            return response.json();
-        } else {
-            // Gérer les erreurs
-            throw new Error('Impossible de récupérer les informations de l\'utilisateur Discord.');
-        }
-    })
-    .then(userData => {
-        // Utiliser les données de l'utilisateur
-        console.log(userData);
-    })
-    .catch(error => {
-        // Gérer les erreurs
-        console.error(error);
-    });
-}
+
 
 export { getUsers };
