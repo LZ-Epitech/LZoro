@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { getTable, postInTable, updateInTable } from './airtable.js';
 import jwt from 'jsonwebtoken';
+import axios from 'axios';
 // import { getQueue1v1, getQueue2v2, isAlreadyOneQueing1v1, isAlreadyOneQueing2v2, queueConnect1v1, queueConnect2v2 } from './ranked/queuing.js';
 
 const app = express()
@@ -102,7 +103,30 @@ app.get('/users/get/tags', async (req, res) =>{
 })
 
 app.post('/discord/login', async (req, res) => {
+    const { code } = req.body;
 
+    try {
+        const response = await axios.post('https://discord.com/api/oauth2/token', {
+            client_id: 'YOUR_CLIENT_ID',
+            client_secret: 'YOUR_CLIENT_SECRET',
+            grant_type: 'authorization_code',
+            code,
+            redirect_uri: 'http://localhost:3000/',
+            scope: 'identify connections guilds',
+        });
+
+        const { access_token } = response.data;
+        res.json({ token: access_token });
+    } catch (error) {
+        console.error('Error exchanging code for token:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(Server is running on port ${PORT});
+});
 })
 
 app.listen(port, () => {
