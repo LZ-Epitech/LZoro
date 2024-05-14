@@ -5,6 +5,10 @@
     color: black;
 }
 
+.tournamentview__forpagetitle {
+    color: white;
+}
+
 .tournamentview::-webkit-scrollbar {
     width: 0;
 }

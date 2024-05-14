@@ -75,7 +75,6 @@ function Nav() {
 
     return (
         <div>
-            <h1>{discordUserName ? discordUserName : "Not Logged In"}</h1>
             <div className="Nav">
                 <Link className="link site-link" to="/">LZoro</Link>
                 <Link className="link" to="/">Home</Link>

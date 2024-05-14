@@ -2,5 +2,6 @@
     height: 100%;
     width: 100%;
     display: flex;
-    margin: 5vh 1vh;
+    padding: 5vh 1vh;
+    background-color: black;
 }

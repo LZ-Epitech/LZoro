@@ -27,12 +27,14 @@ function TournamentDetails({dataTournament, activeTournament})
                         <img src={active.background_url}/>
                     </div>
                     <p className="tournamentdetails__name">{active.name}</p>
-                    <p className="tournamentdetails__nbrjoueurs">Nombre de joueurs : {active.nbr_joueurs}</p>
-                    <p className="tournamentdetails__cashprize">Cashprize : {active.cashprize}</p>
-                    <p className="tournamentdetails__format">Format : {active.format}</p>
-                    <p className="tournamentdetails__datebegin">Date de début : {active.date_begin}</p>
-                    <p className="tournamentdetails__dateend">Date de fin : {active.date_end}</p>
-                    <p className="tournamentdetails__description">Description : {active.description}</p>
+                    <p className="tournamentdetails__description">{active.description}</p>
+                    <p className="tournamentdetails__informatoins">Informations</p>
+                    <p className="tournamentdetails__nbrjoueurs">Joueurs inscrits : {active.nbr_joueurs}</p>
+                    <div className='infos'>
+                        <p className="tournamentdetails__datebegin">Date :&emsp;{active.date_begin} - {active.date_end}</p>
+                        <p className="tournamentdetails__cashprize">Cashprize : {active.cashprize}</p>
+                        <p className="tournamentdetails__format">Format : {active.format}</p>
+                    </div>
                     <p className="iscriptionbutton">S'inscrire</p>
                 </div>
             );
