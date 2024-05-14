@@ -13,6 +13,7 @@
 .toprankings__title {
     margin-bottom: 25px;
     font-size: 30px;
+    color: white;
 }
 
 .toprankings__title::after {
@@ -26,7 +27,7 @@
 }
 
 .top3 {
-    position: relative;
+    position: relative;;
 }
 
 .one {
