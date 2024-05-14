@@ -1,52 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import './css/Profil.css';
 import profilePicture from './pp.jpg';
+import { getDiscordUser } from '../providers/getDiscordLogin';
 
 function Profil() {
-
-    const [dataProfil, setDataProfil] = useState({
-        nom: "",
-        discord: "",
-        elo1v1: 0,
-        elo2v2: 0,
-        image: "" // Tu peux stocker l'URL de l'image ici
-    });
+    const [dataProfil, setDataProfil] = useState(null); // Initialiser à null pour indiquer le chargement
+    const [loading, setLoading] = useState(true); // État de chargement initialisé à true
 
     useEffect(() => {
-        const getInfo = async () => {
+        const fetchData = async () => {
             try {
-                // Remplace cet exemple par ta requête réelle
-                const response = await fetch('http://localhost:3001/profil', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const data = await response.json();
-                setDataProfil(data);
+                const user = await getDiscordUser(localStorage.getItem('token'));
+                setDataProfil(user);
+                setLoading(false); // Mettre à jour l'état de chargement à false une fois les données reçues
             } catch (error) {
-                console.log(error);
+                console.error('Erreur lors de la récupération des données de profil :', error);
+                setLoading(false); // Mettre à jour l'état de chargement à false en cas d'erreur
             }
         };
-        getInfo();
 
-        return () => {};
+        fetchData();
     }, []);
 
     return (
         <div className="profil-container">
-            <h2>Yoyo</h2>
-            <img src={profilePicture} alt="Profil" />
-            <div>
-                <p className='discord'><strong>Discord : IZI</strong></p>
-                <p className='elo1v1'><strong>ELO 1v1 : 1500</strong></p>
-                <p className='elo2v2'><strong>ELO 2v2 : 500</strong></p>
-            </div>
+            {loading ? (
+                <p>Chargement...</p>
+            ) : (
+                <>
+                    <h2>Yoyo</h2>
+                    <img src={`https://cdn.discordapp.com/avatars/${dataProfil.id}/${dataProfil.avatar}.png`} alt="Profil" />
+                    <div>
+                        <p className='discord'><strong>Discord : {dataProfil.username}</strong></p>
+                        <p className='elo1v1'><strong>ELO 1v1 : 1500</strong></p>
+                        <p className='elo2v2'><strong>ELO 2v2 : 500</strong></p>
+                    </div>
+                </>
+            )}
         </div>
     );
 }
+
 
 export default Profil;

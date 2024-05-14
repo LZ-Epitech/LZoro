@@ -12,21 +12,19 @@ async function fetchDiscordUser(token) {
     }
 }
 
-function getAuthorizationCodeFromURL() {
-    if (hasAuthorizationCodeInURL()) {
-        var currentURL = window.location.href;
-        var urlParams = new URLSearchParams(currentURL.split('?')[1]);
-        var authorizationCode = urlParams.get('code');
-        getDiscord(authorizationCode)
-        return authorizationCode;
+const getDiscordUser = async (accessToken) => {
+    const response = await fetch('https://discord.com/api/users/@me', {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    });
+    if (response.ok) {
+        const user = await response.json();
+        console.log(user);
+        return user;
     } else {
-        return 0;
+        console.error('Failed to fetch Discord user');
     }
-}
+};
 
-function hasAuthorizationCodeInURL() {
-    var queryString = window.location.search;
-    return queryString.includes('code=');
-}
-
-export { getAuthorizationCodeFromURL, fetchDiscordUser };
+export { fetchDiscordUser, getDiscordUser };

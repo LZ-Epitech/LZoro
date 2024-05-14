@@ -1,40 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './css/nav.css';
+import { getDiscordUser } from '../../providers/getDiscordLogin';
 
 function Nav() {
     const [discordUser, setDiscordUser] = useState(null);
 
     useEffect(() => {
-        const extractTokenFromUrl = () => {
+        const extractTokenFromUrl = async () => {
             const urlParams = new URLSearchParams(window.location.hash.substr(1));
             const accessToken = urlParams.get('access_token');
             if (accessToken) {
-                localStorage.setItem('discordToken', accessToken);
+                localStorage.setItem('token', accessToken);
                 window.history.replaceState({}, document.title, "/");
-                fetchDiscordUser(accessToken);
-            }
+                const user = await getDiscordUser(accessToken);
+                setDiscordUser(user);
+        }
         };
 
         extractTokenFromUrl();
     }, []);
 
-    const fetchDiscordUser = async (accessToken) => {
-        const response = await fetch('https://discord.com/api/users/@me', {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        });
-        if (response.ok) {
-            const user = await response.json();
-            setDiscordUser(user);
-        } else {
-            console.error('Failed to fetch Discord user');
-        }
-    };
-
     const handleLogout = () => {
-        localStorage.removeItem('discordToken');
+        localStorage.removeItem('token');
         setDiscordUser(null);
     };
 
