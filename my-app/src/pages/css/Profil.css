@@ -1,0 +1,62 @@
+/* Profil.css */
+
+.profil-container {
+    width: 90vw; /* Utilisation de 90% de la largeur de la vue */
+    height: 40vw; /* La hauteur est égale à la largeur pour former un carré */
+    margin: 5vh auto; /* Centrer verticalement et horizontalement */
+    text-align: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profil-container img {
+    /* position: absolute; */
+    margin-right: 1450px;
+    width: 10%; /* Ajuste la taille de l'image si nécessaire */
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.profil-container h2 {
+    position: absolute;
+    font-size: 60px;
+    top: 230px;
+    margin-left: 250px;
+    color: black;
+}
+
+.discord {
+    position: absolute;
+    font-size: 30px;
+    top: 400px;
+    left: 250px;
+    color: black;
+}
+
+.elo1v1 {
+    position: absolute;
+    font-size: 30px;
+    top: 600px;
+    left: 250px;
+    color: black;
+}
+
+.elo2v2 {
+    position: absolute;
+    font-size: 30px;
+    top: 800px;
+    left: 250px;
+    color: black;
+}
+
+.profil-container p {
+    margin: 10px 0;
+}
+
+.profil-container p strong {
+    font-weight: bold;
+}
+
+/* You can add more styling as needed */

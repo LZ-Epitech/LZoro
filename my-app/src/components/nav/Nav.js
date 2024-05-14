@@ -21,9 +21,9 @@ function Nav() {
         <div>
             <div className="Nav">
                 <Link className="link site-link" to="/">LZoro</Link>
-                <Link className="link" to="/">Home</Link>
-                <Link className="link" to="/ranked">Ranked</Link>
-                <Link className="link" to="/tournaments">Tournament</Link>
+                <Link className="link" to="/">Acceuil</Link>
+                <Link className="link" to="/ranked">Classée</Link>
+                <Link className="link" to="/tournaments">Tournois</Link>
                 <Link className="link" to="/profil">Profil</Link>
                 {discordUser ? (
                     <div>
