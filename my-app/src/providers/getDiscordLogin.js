@@ -17,20 +17,20 @@ async function fetchDiscordUser(token) {
     } finally {}
 }
 
-// const getDiscordUser = async (accessToken) => {
-//     const response = await fetch('https://discord.com/api/users/@me', {
-//         headers: {
-//             Authorization: `Bearer ${accessToken}`
-//         }
-//     });
-//     if (response.ok) {
-//         const user = await response.json();
-//         console.log(user);
-//         return user;
-//     } else {
-//         console.error('Failed to fetch Discord user');
-//     }
-// };
+const getDiscordUser = async (accessToken) => {
+    const response = await fetch('https://discord.com/api/users/@me', {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    });
+    if (response.ok) {
+        const user = await response.json();
+        console.log(user);
+        return user;
+    } else {
+        console.error('Failed to fetch Discord user');
+    }
+};
 
 
 
