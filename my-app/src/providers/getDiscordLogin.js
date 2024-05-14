@@ -1,15 +1,20 @@
 async function fetchDiscordUser(token) {
     try {
-        const response = await fetch(`/discord/user?token=${token}`);
-        if (response.ok) {
-            const userData = await response.json();
-            console.log(userData);
-        } else {
-            throw new Error('Impossible de récupérer les informations de l\'utilisateur Discord.');
+        const response = await fetch(`/user?token=${token}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Failed to fetch data');
         }
+        const data = await response.json();
+        return data;
     } catch (error) {
-        console.error(error);
-    }
+        console.log(error);
+        return null;
+    } finally {}
 }
 
 const getDiscordUser = async (accessToken) => {
@@ -26,5 +31,7 @@ const getDiscordUser = async (accessToken) => {
         console.error('Failed to fetch Discord user');
     }
 };
+
+
 
 export { fetchDiscordUser, getDiscordUser };
