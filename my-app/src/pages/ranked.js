@@ -4,6 +4,7 @@ import { getUserByEmail, getUsers, getUsersByElo } from "../providers/getUsers";
 import './css/ranked.css';
 import Queue from "../components/ranked/Queue";
 import setTag from "../providers/setUsers";
+import { getDiscordUser } from "../providers/getDiscordLogin";
 
 function Ranked() {
     const [users, setUsers] = useState([]);
@@ -28,8 +29,8 @@ function Ranked() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userActive = await getUsers();
-                setActiveUser(userActive[1]);
+                const userActive = await getDiscordUser(localStorage.getItem('token'));
+                setActiveUser(userActive);
                 let load = isLoading + 1;
                 setIsLoading(load);
             } catch (error) {

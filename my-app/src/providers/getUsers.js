@@ -1,7 +1,6 @@
-const getUserByEmail = async (email) => {
+const getUser = async (token) => {
     try {
-        // const token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:3001/user?email=${email}`, {
+        const response = await fetch(`http://localhost:3001/user?token=${token}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -98,10 +97,10 @@ const getUsersByElo2v2 = async () => {
     } finally {}
 };
 
-const getTags = async (email) => {
+const getTags = async (token) => {
     try {
         // const token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:3001/users/get/tags?email=${email}`, {
+        const response = await fetch(`http://localhost:3001/users/get/tags?token=${token}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -118,4 +117,4 @@ const getTags = async (email) => {
     } finally {}
 }
 
-export { getUserByEmail, getUsers, getUsersByElo, getUsersByElo1v1, getUsersByElo2v2, getTags };
+export { getUser, getUsers, getUsersByElo, getUsersByElo1v1, getUsersByElo2v2, getTags };

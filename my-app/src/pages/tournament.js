@@ -32,19 +32,6 @@ function Tournament()
         return () => {};
     }, []);
 
-    {/* {dataTournament.map(tournament => (
-        <div key={tournament.id} className="tournament-card">
-            <img src={tournament.fields.background_url} alt={tournament.fields.name} />
-            <h2>{tournament.fields.name}</h2>
-            <p>Cash Prize: {tournament.fields.cashprize}</p>
-            <p>Date Begin: {tournament.fields.date_begin}</p>
-            <p>Date End: {tournament.fields.date_end}</p>
-            <p>Number of Players: {tournament.fields.nbr_joueurs}</p>
-            <p>Status: {tournament.fields.done}</p>
-            <p>Format: {tournament.fields.format}</p>
-        </div>
-    ))} */}
-
     return (
         <div className="tournament">
             <TournamentViewForPage dataTournament={dataTournament} setActive={setActiveTournament} />

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getUserByEmail } from '../../providers/getUsers';
 import { setTag1, setTag2} from '../../providers/setUsers';
 import './css/queue.css';
+import { getDiscordUser } from '../../providers/getDiscordLogin';
 
 function Queue({activeUser, setActiveUser})
 {
@@ -12,6 +13,7 @@ function Queue({activeUser, setActiveUser})
     // Check if player search matchs
     useEffect(() => {
         if (activeUser && activeUser.fields) {
+            console.log(activeUser);
             setTags1(activeUser.fields.tag1);
             setTags2(activeUser.fields.tag2);
         }
@@ -19,9 +21,9 @@ function Queue({activeUser, setActiveUser})
 
     const handlebutton1v1 = async () => {
         if (activeUser && activeUser.fields) {
-            await setTag1(activeUser.fields.email, 1);
+            await setTag1(activeUser.fields.token, 1);
             setTags1(1);
-            const tag1 = await getUserByEmail(activeUser.fields.email);
+            const tag1 = await getDiscordUser(activeUser.fields.token);
             setActiveUser(tag1);
             console.log("tags : " + tags1);
             console.log("user : " + activeUser);
@@ -31,9 +33,9 @@ function Queue({activeUser, setActiveUser})
 
     const handlebutton2v2 = async () => {
         if (activeUser && activeUser.fields) {
-            await setTag2(activeUser.fields.email, 1);
+            await setTag2(activeUser.fields.token, 1);
             setTags2(1);
-            const user = await getUserByEmail(activeUser.fields.email);
+            const user = await getDiscordUser(activeUser.fields.token);
             setActiveUser(user);
             console.log("tags : " + user);
             console.log("user tag : " + activeUser.fields.tag2);
@@ -42,11 +44,11 @@ function Queue({activeUser, setActiveUser})
 
     const close = async () => {
         if (activeUser && activeUser.fields) {
-            await setTag1(activeUser.fields.email, 0);
-            await setTag2(activeUser.fields.email, 0);
+            await setTag1(activeUser.fields.token, 0);
+            await setTag2(activeUser.fields.token, 0);
             setTags1(0);
             setTags2(0);
-            const user = await getUserByEmail(activeUser.fields.email)
+            const user = await getDiscordUser(activeUser.fields.token)
             setActiveUser(user);
             console.log("tags : " + user);
             console.log("user tag : " + activeUser.fields.tag2);
@@ -77,7 +79,7 @@ function Queue({activeUser, setActiveUser})
         return(<div className="ranked__queue__already">Please wait</div>);
     }
     const searchAlready = () => {
-        if (!activeUser && !activeUser.fields) {
+        if (!activeUser || !activeUser.fields) {
             return waitPlease();
         }
         if (tags1 == 1 || tags2 == 1) {
