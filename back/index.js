@@ -96,10 +96,13 @@ app.post('/users/tag2', async (req, res) =>{
     res.json(tag);
 })
 app.get('/users/get/tags', async (req, res) =>{
-    console.log(req);
     const { email } = req.query;
     const tag = await getTag(email);
     res.json(tag);
+})
+
+app.post('/discord/login', async (req, res) => {
+
 })
 
 app.listen(port, () => {
