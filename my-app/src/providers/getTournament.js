@@ -5,7 +5,6 @@ const getTournament = async () => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-
             },
         });
         if (!response.ok) {

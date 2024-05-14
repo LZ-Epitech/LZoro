@@ -7,9 +7,13 @@ import axios from 'axios';
 
 const app = express()
 const port = 3001
+const YOUR_CLIENT_ID = "1239717928161640518";
+const YOUR_CLIENT_SECRET = "UrYIw5-4hdYeBZM_HmHflfPnvSk-Yqdw";
 app.use(express.json());
 
-app.use(cors())
+app.use(cors({
+    origin: ['http://localhost:3000', 'http://localhost:3001']
+}));
 
 const verifyToken = (req, res, next) => {
     const token = req.headers.authorization;
@@ -104,11 +108,13 @@ app.get('/users/get/tags', async (req, res) =>{
 
 app.post('/discord/login', async (req, res) => {
     const { code } = req.body;
-
+    console.log(code);
+    console.log(req.body);
     try {
         const response = await axios.post('https://discord.com/api/oauth2/token', {
-            client_id: 'YOUR_CLIENT_ID',
-            client_secret: 'YOUR_CLIENT_SECRET',
+            header: {'Content-Type': 'application/json',},
+            client_id: YOUR_CLIENT_ID,
+            client_secret: YOUR_CLIENT_SECRET,
             grant_type: 'authorization_code',
             code,
             redirect_uri: 'http://localhost:3000/',
