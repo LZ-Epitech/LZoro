@@ -61,9 +61,6 @@ function postInTable(table, data)
 function updateInTable(ElementID, table, data)
 {
     var base = new Airtable({apiKey: APIKEY}).base('appBAcxHY6p1Dpv3p');
-    console.log("=============");
-    console.log(data);
-    console.log("=============");
 
     const obj = {};
     data.forEach(item => {
@@ -94,9 +91,6 @@ function updateInTable(ElementID, table, data)
 function updateInTable1v1(ElementID1, ElementID2, table, data)
 {
     var base = new Airtable({apiKey: APIKEY}).base('appBAcxHY6p1Dpv3p');
-    console.log("=============");
-    console.log(data);
-    console.log("=============");
 
     const obj = {};
     data.forEach(item => {
@@ -131,9 +125,6 @@ function updateInTable1v1(ElementID1, ElementID2, table, data)
 function updateInTable2v2(ElementID1, ElementID2, ElementID3, ElementID4, table, data)
 {
     var base = new Airtable({apiKey: APIKEY}).base('appBAcxHY6p1Dpv3p');
-    console.log("=============");
-    console.log(data);
-    console.log("=============");
 
     const obj = {};
     data.forEach(item => {

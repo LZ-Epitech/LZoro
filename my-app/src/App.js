@@ -12,13 +12,19 @@ import { getAuthorizationCodeFromURL, getDiscord } from './providers/getDiscordL
 function App()
 {
     useEffect(() => {
-        localStorage.setItem('code', getAuthorizationCodeFromURL());
-        const tok = async () => {
-            const token = await getDiscord(localStorage.getItem('code'));
-            localStorage.setItem('token', token);
-        }
+        const currentUrl = window.location.href;
 
-        tok();
+        if (currentUrl.includes("#")) {
+            const fragmentIndex = currentUrl.indexOf("#");
+            const fragment = currentUrl.substring(fragmentIndex + 1);
+            const params = new URLSearchParams(fragment);
+            if (params.has("access_token")) {
+                const accessToken = params.get("access_token");
+                localStorage.setItem('token', accessToken);
+            }
+        } else {
+            console.log("L'URL ne contient pas de fragment.");
+        }
     });
 
     return (

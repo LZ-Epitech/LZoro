@@ -29,7 +29,7 @@ function Ranked() {
         const fetchData = async () => {
             try {
                 const userActive = await getUsers();
-                setActiveUser(userActive[0]);
+                setActiveUser(userActive[1]);
                 let load = isLoading + 1;
                 setIsLoading(load);
             } catch (error) {

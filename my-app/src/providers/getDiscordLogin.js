@@ -1,13 +1,12 @@
 const getDiscord = async (code) => {
+    console.log(JSON.stringify({ 'code': code }));
     try {
         const response = await fetch('http://localhost:3001/discord/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: {
-                'code': code,
-            }
+            body: JSON.stringify({ 'code': code }),
         });
         if (!response.ok) {
             throw new Error('Failed to fetch data');
@@ -17,7 +16,6 @@ const getDiscord = async (code) => {
     } catch (error) {
         console.log(error);
     } finally {}
-    console.log(code);
 };
 
 function getAuthorizationCodeFromURL() {

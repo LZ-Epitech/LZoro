@@ -6,7 +6,7 @@ function Nav() {
     const [discordUser, setDiscordUser] = useState(null);
     const [discordUserName, setDiscordUserName] = useState(null);
     const handleLogin = () => {
-        window.location.href = `https://discord.com/oauth2/authorize?client_id=1239717928161640518&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&scope=identify`;
+        window.location.href = `https://discord.com/oauth2/authorize?client_id=1239797278533746732&response_type=token&redirect_uri=http%3A%2F%2Flocalhost%3A3000&scope=identify`;
     };
 
     const handleLogout = () => {

@@ -3,31 +3,17 @@ import cors from 'cors';
 import { getTable, postInTable, updateInTable } from './airtable.js';
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
-// import { getQueue1v1, getQueue2v2, isAlreadyOneQueing1v1, isAlreadyOneQueing2v2, queueConnect1v1, queueConnect2v2 } from './ranked/queuing.js';
+import querystring from 'querystring';
 
 const app = express()
 const port = 3001
-const YOUR_CLIENT_ID = "1239717928161640518";
-const YOUR_CLIENT_SECRET = "UrYIw5-4hdYeBZM_HmHflfPnvSk-Yqdw";
+const YOUR_CLIENT_ID = "1239797278533746732";
+const YOUR_CLIENT_SECRET = "CnTTdPAIln8_K0ZXtBm-faLrgUsxzmND";
 app.use(express.json());
 
 app.use(cors({
     origin: ['http://localhost:3000', 'http://localhost:3001']
 }));
-
-const verifyToken = (req, res, next) => {
-    const token = req.headers.authorization;
-    if (!token) {
-        return res.status(401).json({ message: 'No token provided' });
-    }
-    try {
-        const decoded = jwt.verify(token, 'votre_secret_key');
-        req.user = decoded;
-        next();
-    } catch (error) {
-        return res.status(401).json({ message: 'Invalid token' });
-    }
-};
 
 app.get('/user', async (req, res) => {
     const { email } = req.query;
@@ -76,7 +62,7 @@ app.get('/api/users/login', async (req, res) => {
     const matchs = await getMatchsFromPlayer(req.body);
     res.json(matchs);
 })
-app.get('/profils', verifyToken, async (req, res) => {
+app.get('/profils', async (req, res) => {
     try {
         const userEmail = req.user.email;
         const profil = await getProfil(userEmail);
@@ -108,19 +94,24 @@ app.get('/users/get/tags', async (req, res) =>{
 
 app.post('/discord/login', async (req, res) => {
     const { code } = req.body;
+    const authorization_code = "authorization_code"
     console.log(code);
-    console.log(req.body);
     try {
-        const response = await axios.post('https://discord.com/api/oauth2/token', {
-            header: {'Content-Type': 'application/json',},
+        const data = JSON.stringify({
             client_id: YOUR_CLIENT_ID,
             client_secret: YOUR_CLIENT_SECRET,
-            grant_type: 'authorization_code',
+            grant_type: authorization_code,
             code,
             redirect_uri: 'http://localhost:3000/',
             scope: 'identify',
         });
-
+        console.log(data);
+        const response = await axios.post('https://discord.com/api/v10/oauth2/token',
+            data, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
         const { access_token } = response.data;
         res.json({ token: access_token });
     } catch (error) {
