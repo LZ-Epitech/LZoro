@@ -112,7 +112,7 @@ app.post('/discord/login', async (req, res) => {
             grant_type: 'authorization_code',
             code,
             redirect_uri: 'http://localhost:3000/',
-            scope: 'identify connections guilds',
+            scope: 'identify',
         });
 
         const { access_token } = response.data;
