@@ -166,6 +166,7 @@ function updateInTable2v2(ElementID1, ElementID2, ElementID3, ElementID4, table,
 
 function createInTable(table, data)
 {
+    var base = new Airtable({apiKey: APIKEY}).base('appBAcxHY6p1Dpv3p');
     const obj = {};
 
     data.forEach(item => {

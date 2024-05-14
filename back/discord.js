@@ -1,28 +1,21 @@
 async function getUserInfo(accessToken) {
-    // Créer une requête HTTP GET
-    await fetch('https://discord.com/api/v10/users/@me', {
-        headers: {
-            'Authorization': `Bearer ${accessToken}`
-        }
-    })
-    .then(response => {
-        // Vérifier si la réponse est OK (code de statut 200)
+    try {
+        const response = await fetch('https://discord.com/api/v10/users/@me', {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
+
+        console.log("Statut de la réponse:", response.status);
         if (response.ok) {
-            // Récupérer les données JSON de la réponse
             return response.json();
+            // console.log("Données utilisateur:", userData);
         } else {
-            // Gérer les erreurs
             throw new Error('Impossible de récupérer les informations de l\'utilisateur Discord.');
         }
-    })
-    .then(userData => {
-        // Utiliser les données de l'utilisateur
-        console.log(userData);
-    })
-    .catch(error => {
-        // Gérer les erreurs
+    } catch (error) {
         console.error(error);
-    });
+    }
 }
 
 export { getUserInfo };

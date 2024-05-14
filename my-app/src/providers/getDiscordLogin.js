@@ -1,3 +1,6 @@
+import { getUsers } from "./getUsers";
+import { createUsers } from "./setUsers";
+
 async function fetchDiscordUser(token) {
     try {
         const response = await fetch(`/user?token=${token}`, {
@@ -25,8 +28,13 @@ const getDiscordUser = async (accessToken) => {
     });
     if (response.ok) {
         const user = await response.json();
-        console.log(user);
-        return user;
+        const users = await getUsers();
+        users.forEach(element => {
+            if (element.fields.token == accessToken) {
+                return element;
+            }
+        });
+        return await createUsers(accessToken);
     } else {
         console.error('Failed to fetch Discord user');
     }
