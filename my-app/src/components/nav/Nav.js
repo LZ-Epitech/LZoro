@@ -62,7 +62,7 @@ function Nav() {
     }, []);
 
     const handleLogin = () => { 
-        window.location.href = `https://discord.com/oauth2/authorize?client_id=1239717928161640518&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&scope=identify+connections+guilds`;
+        window.location.href = `https://discord.com/oauth2/authorize?client_id=1239717928161640518&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&scope=identify`;
     };
 
     const handleLogout = () => {
