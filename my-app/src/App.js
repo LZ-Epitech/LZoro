@@ -6,9 +6,15 @@ import Tournament  from './pages/tournament.js';
 import Profil from './pages/Profil.js';
 import Ranked from './pages/ranked.js';
 import NoPage from './pages/NoPage.js';
+import { useEffect } from 'react';
+import { getAuthorizationCodeFromURL } from './providers/getDiscordLogin.js';
 
 function App()
 {
+    useEffect(() => {
+        localStorage.setItem('code', getAuthorizationCodeFromURL());
+    });
+
     return (
         <div className='App'>
             <BrowserRouter>
