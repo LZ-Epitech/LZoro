@@ -17,8 +17,8 @@ app.use(cors({
 }));
 
 app.get('/user', async (req, res) => {
-    const { email } = req.query;
-    const user = await getUserByEmail(email);
+    const { token } = req.query;
+    const user = await getUserInfo(token);
     res.json(user);
 })
 app.get('/users', async (req, res) => {
@@ -58,25 +58,6 @@ app.get('/matchsFromPlayer', async (req, res) => {
     const matchs = await getMatchsFromPlayer(ID);
     res.json(matchs);
 })
-app.get('/api/users/login', async (req, res) => {
-    const { email , password } = req.body;
-    const matchs = await getMatchsFromPlayer(req.body);
-    res.json(matchs);
-})
-app.get('/profils', async (req, res) => {
-    try {
-        const userEmail = req.user.email;
-        const profil = await getProfil(userEmail);
-        if (!profil) {
-            return res.status(404).json({ message: 'Profil not found' });
-        }
-        res.json(profil);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-    res.json(profil);
-})
 app.post('/users/tag1', async (req, res) =>{
     const { email, tags1 } = req.body;
     const tag = await setTag1(email, parseInt(tags1));
@@ -97,34 +78,6 @@ app.post('/users/create', async (req, res) => {
     const newUser = await createUser(token);
     res.json(newUser);
 })
-
-app.post('/discord/login', async (req, res) => {
-    const { code } = req.body;
-    const authorization_code = "authorization_code"
-    console.log(code);
-    try {
-        const data = JSON.stringify({
-            client_id: YOUR_CLIENT_ID,
-            client_secret: YOUR_CLIENT_SECRET,
-            grant_type: authorization_code,
-            code,
-            redirect_uri: 'http://localhost:3000/',
-            scope: 'identify',
-        });
-        console.log(data);
-        const response = await axios.post('https://discord.com/api/v10/oauth2/token',
-            data, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        const { access_token } = response.data;
-        res.json({ token: access_token });
-    } catch (error) {
-        console.error('Error exchanging code for token:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
 
 app.listen(port, () => {
     console.log(`Node.JS server launched on port [${port}] : http://localhost:${port}`)
@@ -237,23 +190,6 @@ async function getMatchsFromPlayer(player)
     })
 }
 
-async function logIn(username, password)
-{
-    const users = await getUsers();
-    const user = users.find(user => user.fields.email === username);
-    const secretKey = process.env.JWT_SECRET_KEY;
-
-    if (!user) {
-        return res.status(404).json({ message: 'Les données entrées sont incorects' });
-    }
-    if (password !== user.fields.password) {
-        return res.status(404).json({ message: 'Les données entrées sont incorects' });
-    }
-    const token = jwt.sign({ id: user.id, email: user.fields.email }, secretKey, { expiresIn: '1h' });
-
-    return req.json({ token });
-}
-
 async function getProfil(email)
 {
     const users = await getUsers();
@@ -272,7 +208,7 @@ async function createUser(token)
         tag1: 0,
         tag2: 0,
     });
-    return createInTable("users", data)
+    return createInTable("users", data);
 }
 
 async function setTag1(user, tag)

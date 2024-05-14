@@ -36,4 +36,23 @@ const setTag2 = async (email, tag) => {
     } finally {}
 }
 
-export { setTag1, setTag2 };
+const createUsers = async (accessToken) => {
+    try {
+        const response = await fetch('http://localhost:3001/users/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ token: accessToken }),
+        });
+        if (!response.ok) {
+            throw new Error('Failed to fetch data');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    } finally {}
+}
+
+export { setTag1, setTag2, createUsers };

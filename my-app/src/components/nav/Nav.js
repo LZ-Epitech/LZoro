@@ -18,7 +18,6 @@ function Nav() {
             accessToken = urlParams.get('access_token')
             if (accessToken) {
                 localStorage.setItem('token', accessToken);
-                window.history.replaceState({}, document.title, "/");
                 const user = await getDiscordUser(accessToken);
                 setDiscordUser(user);
         }
