@@ -34,4 +34,4 @@ const getDiscordUser = async (accessToken) => {
 
 
 
-export { fetchDiscordUser };
+export { fetchDiscordUser, getDiscordUser };
