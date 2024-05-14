@@ -26,15 +26,16 @@ const getDiscordUser = async (accessToken) => {
             Authorization: `Bearer ${accessToken}`
         }
     });
+
     if (response.ok) {
         const user = await response.json();
         const users = await getUsers();
-        users.forEach(element => {
-            if (element.fields.token == accessToken) {
+        for (const element of users) {
+            if (element.fields.token === accessToken) {
                 return element;
             }
-        });
-        return await createUsers(accessToken);
+        }
+        return;
     } else {
         console.error('Failed to fetch Discord user');
     }

@@ -2,21 +2,21 @@ import { updateInTable1v1, updateInTable2v2 } from "../airtable.js";
 import { getUsers } from "../index.js";
 import { createMatch1v1, createMatch2v2 } from "./matchs.js";
 
-function getQueueList()
-{
-    const users = getUsers;
+async function getQueueList() {
+    const users = await getUsers();
     const userQueuing = [];
 
     users.forEach(user => {
-        if (user.fields.tag1 === 1 || user.fields.tag2 === 1)
+        if (user.fields.tag1 === 1 || user.fields.tag2 === 1) {
             userQueuing.push(user);
+        }
     });
     return userQueuing;
 }
 
-function getQueue1v1()
+async function getQueue1v1()
 {
-    const users = getQueueList();
+    const users = await getQueueList();
     const userQueuing = [];
 
     users.forEach(user => {
@@ -35,9 +35,9 @@ function isAlreadyOneQueing1v1()
     return 0;
 }
 
-function getQueue2v2()
+async function getQueue2v2()
 {
-    const users = getQueueList();
+    const users = await getQueueList();
     const userQueuing = [];
 
     users.forEach(user => {

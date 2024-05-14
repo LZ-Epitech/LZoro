@@ -8,20 +8,18 @@ function Nav() {
 
     useEffect(() => {
         const extractTokenFromUrl = async () => {
-            let accessToken = localStorage.getItem('token');
-            if (accessToken) {
-                const user = await getDiscordUser(accessToken);
-                setDiscordUser(user);
+            const token = localStorage.getItem('token');
+            console.log(token);
+            if (token) {
+                try {
+                    const user = await getDiscordUser(token);
+                    setDiscordUser(user);
+                } catch (error) {
+                    console.error("Une erreur s'est produite lors de la récupération de l'utilisateur Discord:", error);
+                }
             }
-            const urlParams = new URLSearchParams(window.location.hash.substr(1));
-            accessToken = urlParams.get('access_token');
-            if (accessToken) {
-                localStorage.setItem('token', accessToken);
-                const user = await getDiscordUser(accessToken);
-                setDiscordUser(user);
-        }
         };
-
+        console.log(discordUser);
         extractTokenFromUrl();
     }, []);
 
@@ -44,7 +42,7 @@ function Nav() {
                 <Link className="link" to="/profil">Profil</Link>
                 {discordUser ? (
                     <div>
-                        <img src={`https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png`} alt="Discord Avatar" />
+                        <img src={`https://cdn.discordapp.com/avatars/${discordUser.fields.discordID}/${discordUser.fields.avatar}.png`} alt="Discord Avatar" />
                         <button className="logout-button" onClick={handleLogout}>Logout</button>
                         <p>{discordUser.username}</p>
                     </div>

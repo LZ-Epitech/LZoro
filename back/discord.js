@@ -9,7 +9,6 @@ async function getUserInfo(accessToken) {
         console.log("Statut de la réponse:", response.status);
         if (response.ok) {
             return response.json();
-            // console.log("Données utilisateur:", userData);
         } else {
             throw new Error('Impossible de récupérer les informations de l\'utilisateur Discord.');
         }

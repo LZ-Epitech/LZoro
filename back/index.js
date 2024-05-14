@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import querystring from 'querystring';
 import { getUserInfo } from './discord.js';
+import { getQueue1v1, getQueue2v2, isAlreadyOneQueing1v1, isAlreadyOneQueing2v2, queueConnect1v1, queueConnect2v2 } from './ranked/queuing.js';
 
 const app = express()
 const port = 3001
@@ -59,23 +60,22 @@ app.get('/matchsFromPlayer', async (req, res) => {
     res.json(matchs);
 })
 app.post('/users/tag1', async (req, res) =>{
-    const { email, tags1 } = req.body;
-    const tag = await setTag1(email, parseInt(tags1));
+    const { token, tags1 } = req.body;
+    const tag = await setTag1(token, parseInt(tags1));
     res.json(tag);
 })
 app.post('/users/tag2', async (req, res) =>{
-    const { email, tags2 } = req.body;
-    const tag = await setTag2(email, parseInt(tags2));
+    const { token, tags2 } = req.body;
+    const tag = await setTag2(token, parseInt(tags2));
     res.json(tag);
 })
 app.get('/users/get/tags', async (req, res) =>{
-    const { email } = req.query;
-    const tag = await getTag(email);
+    const { token } = req.query;
+    const tag = await getTag(token);
     res.json(tag);
 })
 app.post('/users/create', async (req, res) => {
     const { token } = req.body;
-    console.log(token);
     const newUser = await createUser(token);
     res.json(newUser);
 })
@@ -84,19 +84,19 @@ app.listen(port, () => {
     console.log(`Node.JS server launched on port [${port}] : http://localhost:${port}`)
 })
 
-
-async function getUserByEmail(email)
+async function getUser(token)
 {
     try {
         const users = await getTable("users");
         for (let i = 0; users[i] !== null; i++)
-            if (users[i].fields.email === email)
+            if (users[i].fields.token === token)
                 return users[i];
     } catch (error) {
         console.error('Error fetching users:', error);
         return [];
     }
 }
+
 async function getUsers()
 {
     try {
@@ -191,65 +191,66 @@ async function getMatchsFromPlayer(player)
     })
 }
 
-async function getProfil(email)
-{
-    const users = await getUsers();
-    const profil = users.find(user => user.fields.email === email);
-    return profil;
-}
-
 async function createUser(token)
 {
     const user = await getUserInfo(token);
-    let gn = user.global_name;
-    let n = user.username;
     const data = [["token", token],
-        ["name", gn],
-        ["username", n],
+        ["name", user.global_name],
+        ["username", user.username],
         ["elo1v1", 500],
         ["elo2v2", 500],
         ["tag1", 0],
-        ["tag2", 0],];
+        ["tag2", 0],
+        ["avatar", user.avatar],
+        ["discordID", user.id],
+    ];
     return createInTable("users", data);
 }
 
 async function setTag1(user, tag)
 {
-    const users = await getUserByEmail(user);
+    const users = await getUser(user);
+    if (tag === 1 && getQueueMatchs1v1(user) === 1) {
+        return;
+    }
     return updateInTable(users.id, "users", [["tag1", tag]]);
 }
 async function setTag2(user, tag)
 {
-    const users = await getUserByEmail(user);
+    const users = await getUser(user);
+    if (tag === 1 && getQueueMatchs2v2(user) === 1) {
+        return;
+    }
     return updateInTable(users.id, "users", [["tag2", tag]]);
 }
 
-// async function searchForMatchs1v1(usg
-
-async function getTag(email)
+async function getTag(token)
 {
-    const users = await getUserByEmail(email);
+    const users = await getUser(token);
     const tags = users.fields.tag;
     return tags;
 }
 
-// async function getQueueMatchs1v1(user)
-// {
-//     const getUsersQueue = getQueue1v1()
-//     if (isAlreadyOneQueing1v1() === 1 && !getUsersQueue.has(user.id)) {
-//         queueConnect1v1(user, getUsersQueue[0]);
-//     }
-//     return 1;
-// }
+async function getQueueMatchs1v1(user)
+{
+    const getUsersQueue = await getQueue1v1();
+    console.log(getUsersQueue);
+    if ((getUsersQueue.length - 1) >= 1) {
+        console.log("1v1 Found !");
+        queueConnect1v1(user, getUsersQueue.find(element => element.id !== user.id));
+    }
+    return 1;
+}
 
-// async function getQueueMatchs2v2(user)
-// {
-//     const getUsersQueue = getQueue2v2();
-//     if (isAlreadyOneQueing2v2() === 1 && !getUsersQueue.has(user.id)) {
-//         queueConnect2v2(user, getUsersQueue[0], getUsersQueue[1], getUsersQueue[2])
-//     }
-//     return 1;
-// }
+async function getQueueMatchs2v2(user)
+{
+    const getUsersQueue = getQueue2v2();
+    if ((getUsersQueue.length - 1) >= 3) {
+        console.log("2v2 Found !");
+        queueConnect2v2(user, getUsersQueue[0], getUsersQueue[1], getUsersQueue[2])
+    }
+    return 1;
+}
 
 
 export { getUsers };

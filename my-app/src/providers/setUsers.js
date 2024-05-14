@@ -1,11 +1,11 @@
-const setTag1 = async (email, tag) => {
+const setTag1 = async (token, tag) => {
     try {
         const response = await fetch('http://localhost:3001/users/tag1', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email: email, tags1: tag }),
+            body: JSON.stringify({ token: token, tags1: tag }),
         });
         if (!response.ok) {
             throw new Error('Failed to fetch data');
@@ -17,14 +17,14 @@ const setTag1 = async (email, tag) => {
     } finally {}
 }
 
-const setTag2 = async (email, tag) => {
+const setTag2 = async (token, tag) => {
     try {
         const response = await fetch('http://localhost:3001/users/tag2', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email: email, tags2: tag }),
+            body: JSON.stringify({ token: token, tags2: tag }),
         });
         if (!response.ok) {
             throw new Error('Failed to fetch data');

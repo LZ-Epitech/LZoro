@@ -27,12 +27,12 @@ function Profil() {
                 <p>Connectez-vous avec Discord !.</p>
             ) : (
                 <>
-                    <h2>{dataProfil.global_name}</h2>
-                    <img src={`https://cdn.discordapp.com/avatars/${dataProfil.id}/${dataProfil.avatar}.png`} alt="Profil" />
+                    <h2>{dataProfil.fields.name}</h2>
+                    <img src={`https://cdn.discordapp.com/avatars/${dataProfil.fields.discordID}/${dataProfil.fields.avatar}.png`} alt="Profil" />
                     <div>
-                        <p className='discord'><strong>Discord : {dataProfil.username}</strong></p>
-                        <p className='elo1v1'><strong>ELO 1v1 : 1500</strong></p>
-                        <p className='elo2v2'><strong>ELO 2v2 : 500</strong></p>
+                        <p className='discord'><strong>Discord : {dataProfil.fields.username}</strong></p>
+                        <p className='elo1v1'><strong>ELO 1v1 : {dataProfil.fields.elo1v1}</strong></p>
+                        <p className='elo2v2'><strong>ELO 2v2 : {dataProfil.fields.elo2v2}</strong></p>
                     </div>
                 </>
             )}

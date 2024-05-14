@@ -30,14 +30,16 @@ function App()
                     if (params.has("access_token")) {
                         const accessToken = params.get("access_token");
                         localStorage.setItem('token', accessToken);
-                        if (getDiscordUser(accessToken) == null) {
+                        const discordUser = await getDiscordUser(accessToken)
+                        if (discordUser == null) {
                             createUsers(accessToken);
                         }
                     }
                 } else {
                     console.log("L'URL ne contient pas de fragment.");
-        }}
-}});
+        }}}
+        checkToken();
+    }, []);
 
     return (
         <div className='App'>
