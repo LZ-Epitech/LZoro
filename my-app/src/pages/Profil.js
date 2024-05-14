@@ -23,8 +23,8 @@ function Profil() {
 
     return (
         <div className="profil-container">
-            {(!dataProfil || loading) ? (
-                <p>Chargement...</p>
+            {!dataProfil ? (
+                <p>Connectez-vous avec Discord !.</p>
             ) : (
                 <>
                     <h2>{dataProfil.global_name}</h2>

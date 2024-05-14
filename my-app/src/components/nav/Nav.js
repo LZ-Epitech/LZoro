@@ -14,7 +14,7 @@ function Nav() {
                 setDiscordUser(user);
             }
             const urlParams = new URLSearchParams(window.location.hash.substr(1));
-            accessToken = accessToken = urlParams.get('access_token');
+            accessToken = urlParams.get('access_token');
             if (accessToken) {
                 localStorage.setItem('token', accessToken);
                 const user = await getDiscordUser(accessToken);
