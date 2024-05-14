@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './css/Profil.css';
-import profilePicture from './pp.jpg';
 import { getDiscordUser } from '../providers/getDiscordLogin';
 
 function Profil() {

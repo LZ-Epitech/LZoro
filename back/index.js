@@ -75,6 +75,7 @@ app.get('/users/get/tags', async (req, res) =>{
 })
 app.post('/users/create', async (req, res) => {
     const { token } = req.body;
+    console.log(token);
     const newUser = await createUser(token);
     res.json(newUser);
 })
@@ -200,14 +201,15 @@ async function getProfil(email)
 async function createUser(token)
 {
     const user = await getUserInfo(token);
-    const data = JSON.stringify({
-        token: token,
-        name: user.global_name,
-        elo1v1: 500,
-        elo2v2: 500,
-        tag1: 0,
-        tag2: 0,
-    });
+    let gn = user.global_name;
+    let n = user.username;
+    const data = [["token", token],
+        ["name", gn],
+        ["username", n],
+        ["elo1v1", 500],
+        ["elo2v2", 500],
+        ["tag1", 0],
+        ["tag2", 0],];
     return createInTable("users", data);
 }
 

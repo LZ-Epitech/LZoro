@@ -22,23 +22,22 @@ function App()
                 if (discordUser == null) {
                     createUsers(localStorage.getItem('token'));
                 }
-            }
-        }
-        if (currentUrl.includes("#")) {
-            const fragmentIndex = currentUrl.indexOf("#");
-            const fragment = currentUrl.substring(fragmentIndex + 1);
-            const params = new URLSearchParams(fragment);
-            if (params.has("access_token")) {
-                const accessToken = params.get("access_token");
-                localStorage.setItem('token', accessToken);
-                if (getDiscordUser(accessToken) == null) {
-                    createUsers(accessToken);
-                }
-            }
-        } else {
-            console.log("L'URL ne contient pas de fragment.");
-        }
-    });
+            } else {
+                if (currentUrl.includes("#")) {
+                    const fragmentIndex = currentUrl.indexOf("#");
+                    const fragment = currentUrl.substring(fragmentIndex + 1);
+                    const params = new URLSearchParams(fragment);
+                    if (params.has("access_token")) {
+                        const accessToken = params.get("access_token");
+                        localStorage.setItem('token', accessToken);
+                        if (getDiscordUser(accessToken) == null) {
+                            createUsers(accessToken);
+                        }
+                    }
+                } else {
+                    console.log("L'URL ne contient pas de fragment.");
+        }}
+}});
 
     return (
         <div className='App'>

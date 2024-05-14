@@ -9,13 +9,12 @@ function Nav() {
     useEffect(() => {
         const extractTokenFromUrl = async () => {
             let accessToken = localStorage.getItem('token');
-            console.log(accessToken);
-            if (localStorage.getItem('token')) {
+            if (accessToken) {
                 const user = await getDiscordUser(accessToken);
                 setDiscordUser(user);
             }
             const urlParams = new URLSearchParams(window.location.hash.substr(1));
-            accessToken = urlParams.get('access_token')
+            accessToken = urlParams.get('access_token');
             if (accessToken) {
                 localStorage.setItem('token', accessToken);
                 const user = await getDiscordUser(accessToken);
