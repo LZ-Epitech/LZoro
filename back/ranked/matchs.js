@@ -1,4 +1,4 @@
-import { createInTable } from "../airtable";
+import { createInTable } from "../airtable.js";
 
 function createMatch1v1(user1, user2)
 {
