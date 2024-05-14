@@ -35,3 +35,5 @@ function hasAuthorizationCodeInURL() {
     var queryString = window.location.search;
     return queryString.includes('code=');
 }
+
+export { getAuthorizationCodeFromURL };
