@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getUserByEmail } from '../../providers/getUsers';
+import { getUserToken } from '../../providers/getUsers';
 import { setTag1, setTag2} from '../../providers/setUsers';
 import './css/queue.css';
 import { getDiscordUser } from '../../providers/getDiscordLogin';
@@ -9,6 +9,23 @@ function Queue({activeUser, setActiveUser})
     const [tags1, setTags1] = useState(0);
     const [tags2, setTags2] = useState(0);
 
+    useEffect(() => {
+        const interval = setInterval(async () => {
+            if (activeUser) {
+                let user = await getUserToken(activeUser);
+                if (user && user.fields) {
+                    setTags1(user.fields.tag1);
+                    setTags2(user.fields.tag2);
+                } else {
+                    console.error("User or user fields are undefined");
+                }
+            } else {
+                console.error("Active user is undefined");
+            }
+        }, 60000);
+
+        return () => clearInterval(interval);
+    }, [activeUser]);
     // DOIT RECEVOIR JOUEUR
     // Check if player search matchs
     useEffect(() => {

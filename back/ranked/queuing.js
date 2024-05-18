@@ -1,4 +1,5 @@
 import { updateInTable1v1, updateInTable2v2 } from "../airtable.js";
+import { sendMessageToUser } from "../discordbot.js";
 import { getUsers } from "../index.js";
 import { createMatch1v1, createMatch2v2 } from "./matchs.js";
 
@@ -58,14 +59,18 @@ function isAlreadyOneQueing2v2()
 
 function queueConnect1v1(user1, user2)
 {
-    updateInTable1v1(user1, user2, "users", [["tag1", 0]]);
+    updateInTable1v1(user1.id, user2.id, "users", [["tag1", 0]]);
+    sendMessageToUser(user1.fields.token, `Nous vous avons trouvé un match contre ${user2.fields.name}`)
+    sendMessageToUser(user2.fields.token, `Nous vous avons trouvé un match contre ${user1.fields.name}`)
     createMatch1v1(user1, user2);
+    return 1;
 }
 
 function queueConnect2v2(user1, user2, user3, user4)
 {
-    updateInTable2v2(user1.id, user2.id, user3.id, user4.id, "users", [["tag2", tag]])
+    updateInTable2v2(user1.id, user2.id, user3.id, user4.id, "users", [["tag2", 0]])
     createMatch2v2(user1, user2, user3, user4);
+    return 1;
 }
 
 export { getQueue1v1, getQueue2v2, getQueueList, isAlreadyOneQueing1v1, isAlreadyOneQueing2v2, queueConnect1v1, queueConnect2v2 };

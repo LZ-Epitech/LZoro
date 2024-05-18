@@ -88,8 +88,7 @@ function updateInTable(ElementID, table, data)
     });
 }
 
-function updateInTable1v1(ElementID1, ElementID2, table, data)
-{
+function updateInTable1v1(ElementID1, ElementID2, table, data) {
     var base = new Airtable({apiKey: APIKEY}).base('appBAcxHY6p1Dpv3p');
 
     const obj = {};
@@ -98,7 +97,8 @@ function updateInTable1v1(ElementID1, ElementID2, table, data)
         const value = item[1];
         obj[key] = value;
     });
-    base(table).update([
+
+    const recordsToUpdate = [
         {
             "id": ElementID1,
             "fields": obj,
@@ -107,18 +107,21 @@ function updateInTable1v1(ElementID1, ElementID2, table, data)
             "id": ElementID2,
             "fields": obj,
         },
-    ], function(err, records) {
-        if (err) {
-            console.error(err);
-            return null;
-        }
-        if (records && records.length > 0) {
-            const firstRecordId = records[0].getId();
-            return firstRecordId;
-        } else {
-            console.log('Aucun enregistrement créé.');
-            return;
-        }
+    ];
+
+    return new Promise((resolve, reject) => {
+        base(table).update(recordsToUpdate, function(err, records) {
+            if (err) {
+                console.error(err);
+                reject(err); // Reject the promise with the error
+            } else if (records && records.length > 0) {
+                const firstRecordId = records[0].getId();
+                resolve(firstRecordId); // Resolve the promise with the first record ID
+            } else {
+                console.log('Aucun enregistrement créé.');
+                resolve(null); // Resolve the promise with null if no records were created
+            }
+        });
     });
 }
 

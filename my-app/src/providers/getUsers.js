@@ -17,6 +17,25 @@ const getUser = async (token) => {
     } finally {}
 };
 
+const getUserToken = async (token) => {
+    try {
+        const response = await fetch(`http://localhost:3001/userToken?token=${token}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Failed to fetch data');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    } finally {}
+};
+
 const getUsers = async () => {
     try {
         // const token = localStorage.getItem('token');
@@ -117,4 +136,4 @@ const getTags = async (token) => {
     } finally {}
 }
 
-export { getUser, getUsers, getUsersByElo, getUsersByElo1v1, getUsersByElo2v2, getTags };
+export { getUser, getUsers, getUsersByElo, getUsersByElo1v1, getUsersByElo2v2, getTags, getUserToken };

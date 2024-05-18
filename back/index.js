@@ -22,6 +22,11 @@ app.get('/user', async (req, res) => {
     const user = await getUserInfo(token);
     res.json(user);
 })
+app.get('/userToken', async (req, res) => {
+    const { token } = req.query;
+    const user = await getUser(token);
+    res.json(user);
+})
 app.get('/users', async (req, res) => {
     const users = await getUsers();
     res.json(users);
@@ -88,9 +93,10 @@ async function getUser(token)
 {
     try {
         const users = await getTable("users");
-        for (let i = 0; users[i] !== null; i++)
+        for (let i = 0; users[i] !== null && users[i] !== undefined; i++) {
             if (users[i].fields.token === token)
                 return users[i];
+        }
     } catch (error) {
         console.error('Error fetching users:', error);
         return [];
@@ -215,6 +221,7 @@ async function setTag1(user, tag)
     }
     return updateInTable(users.id, "users", [["tag1", tag]]);
 }
+
 async function setTag2(user, tag)
 {
     const users = await getUser(user);
@@ -234,12 +241,12 @@ async function getTag(token)
 async function getQueueMatchs1v1(user)
 {
     const getUsersQueue = await getQueue1v1();
-    console.log(getUsersQueue);
+    const userL = await getUser(user);
     if ((getUsersQueue.length - 1) >= 1) {
         console.log("1v1 Found !");
-        queueConnect1v1(user, getUsersQueue.find(element => element.id !== user.id));
+        return queueConnect1v1(userL, getUsersQueue.find(element => element.id !== userL.id));
     }
-    return 1;
+    return 0;
 }
 
 async function getQueueMatchs2v2(user)
@@ -247,9 +254,9 @@ async function getQueueMatchs2v2(user)
     const getUsersQueue = getQueue2v2();
     if ((getUsersQueue.length - 1) >= 3) {
         console.log("2v2 Found !");
-        queueConnect2v2(user, getUsersQueue[0], getUsersQueue[1], getUsersQueue[2])
+        return queueConnect2v2(user, getUsersQueue[0], getUsersQueue[1], getUsersQueue[2])
     }
-    return 1;
+    return 0;
 }
 
 
