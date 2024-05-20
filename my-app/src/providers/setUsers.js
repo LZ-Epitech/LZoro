@@ -30,6 +30,7 @@ const setTag2 = async (token, tag) => {
             throw new Error('Failed to fetch data');
         }
         const data = await response.json();
+        console.log(data);
         return data;
     } catch (error) {
         console.log(error);

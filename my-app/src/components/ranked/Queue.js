@@ -15,7 +15,7 @@ function Queue({activeUser, setActiveUser})
                 let user = await getUserToken(activeUser);
                 if (user && user.fields) {
                     setTags1(user.fields.tag1);
-                    setTags2(user.fields.tag2);
+                    // setTags2(user.fields.tag2);
                 } else {
                     console.error("User or user fields are undefined");
                 }
@@ -30,33 +30,33 @@ function Queue({activeUser, setActiveUser})
     // Check if player search matchs
     useEffect(() => {
         if (activeUser && activeUser.fields) {
-            console.log(activeUser);
             setTags1(activeUser.fields.tag1);
-            setTags2(activeUser.fields.tag2);
+            // setTags2(activeUser.fields.tag2);
         }
     }, [activeUser]);
 
     const handlebutton1v1 = async () => {
         if (activeUser && activeUser.fields) {
             const found = await setTag1(activeUser.fields.token, 1);
-            setTags1(found % 2);
+            console.log(found);
+            if (found === -1) {
+                alert("Tu ne peux pas lancer un nouveau match ! Valide d'abord le précédent.");
+                setTags1(0);
+            } else
+                setTags1(found % 2);
             const tag1 = await getUserToken(activeUser.fields.token);
             setActiveUser(tag1);
-            console.log("tags : " + tags1);
-            console.log("user tag : " + activeUser.fields.tag1);
         }
     }
 
-    const handlebutton2v2 = async () => {
-        if (activeUser && activeUser.fields) {
-            await setTag2(activeUser.fields.token, 1);
-            setTags2(1);
-            const user = await getDiscordUser(activeUser.fields.token);
-            setActiveUser(user);
-            console.log("tags : " + user);
-            console.log("user tag : " + activeUser.fields.tag2);
-        }
-    }
+    // const handlebutton2v2 = async () => {
+    //     if (activeUser && activeUser.fields) {
+    //         await setTag2(activeUser.fields.token, 1);
+    //         setTags2(1);
+    //         const user = await getDiscordUser(activeUser.fields.token);
+    //         setActiveUser(user);
+    //     }
+    // }
 
     const close = async () => {
         if (activeUser && activeUser.fields) {
@@ -66,8 +66,6 @@ function Queue({activeUser, setActiveUser})
             setTags2(0);
             const user = await getDiscordUser(activeUser.fields.token)
             setActiveUser(user);
-            console.log("tags : " + user);
-            console.log("user tag : " + activeUser.fields.tag2);
         }
     }
 
@@ -77,9 +75,9 @@ function Queue({activeUser, setActiveUser})
             <div className="ranked__queue__button1v1" onClick={handlebutton1v1}>
                 1v1
             </div>
-            <div className="ranked__queue__button2v2" onClick={handlebutton2v2}>
+            {/* <div className="ranked__queue__button2v2" onClick={handlebutton2v2}>
                 2v2
-            </div>
+            </div> */}
         </div>);
     }
     function searchFuncAlready()
