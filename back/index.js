@@ -3,7 +3,7 @@ import cors from 'cors';
 import { createInTable, getTable, postInTable, updateInTable } from './airtable.js';
 import { getUserInfo } from './discord.js';
 import { getQueue1v1, getQueue2v2, queueConnect1v1, queueConnect2v2 } from './ranked/queuing.js';
-import { getMatchs, verifyMatch } from './ranked/matchs.js';
+import { getFormatMatch, getMatchs, hasUnverifiedMatch, isInMatchs, verifyMatch } from './ranked/matchs.js';
 
 const app = express()
 const port = 3001
@@ -90,7 +90,7 @@ app.post('/users/tag1', async (req, res) =>{
 app.post('/users/tag2', async (req, res) =>{
     const { token, tags2 } = req.body;
     const tag = await setTag2(token, parseInt(tags2));
-    res.json(tag);
+    res.json(tags2);
 })
 app.get('/users/get/tags', async (req, res) =>{
     const { token } = req.query;
@@ -184,24 +184,14 @@ async function getTournaments2v2()
     return tournaments2v2;
 }
 
-function isInMatchs(player, match) {
-    let playerEquipe1 = match.fields.equipe1.split(':');
-    let playerEquipe2 = match.fields.equipe2.split(':');
-
-    if (playerEquipe1.includes(player) || playerEquipe2.includes(player) ) {
-        return 1;
-    }
-    return 0;
-}
-
 async function getMatchsFromPlayer(player) {
     let matchs = await getMatchs();
     let matchsPlayer = matchs.filter(match => {
         return isInMatchs(player, match) === 1;
     });
-    for (let match in matchsPlayer) {
-
-    }
+    matchsPlayer.forEach(element => {
+        return getFormatMatch(element);
+    });
     return matchsPlayer;
 }
 
@@ -224,6 +214,10 @@ async function createUser(token)
 async function setTag1(user, tag)
 {
     const users = await getUser(user);
+    if (tag === 1 && await hasUnverifiedMatch(users) === 1) {
+        updateInTable(users.id, "users", [["tag1", 0]]);
+        return -1;
+    }
     if (tag === 1 && getQueueMatchs1v1(user) === 1) {
         return 2;
     }
@@ -237,7 +231,8 @@ async function setTag2(user, tag)
     if (tag === 1 && getQueueMatchs2v2(user) === 1) {
         return;
     }
-    return updateInTable(users.id, "users", [["tag2", tag]]);
+    updateInTable(users.id, "users", [["tag2", tag]]);
+    return;
 }
 
 async function getTag(token)
