@@ -18,7 +18,7 @@ function MatchsCard()
     const matchsList = matchs.map(item => {
         return (
             <div>
-                {/* <p>{matchs.fields.id}</p> */}
+                <p>{matchs.fields.id}</p>
             </div>
         );
     })

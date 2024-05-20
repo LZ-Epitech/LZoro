@@ -43,7 +43,6 @@ function Queue({activeUser, setActiveUser})
             const tag1 = await getUserToken(activeUser.fields.token);
             setActiveUser(tag1);
             console.log("tags : " + tags1);
-            console.log("user : " + activeUser);
             console.log("user tag : " + activeUser.fields.tag1);
         }
     }

@@ -1,11 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import { createInTable, getTable, postInTable, updateInTable } from './airtable.js';
-import jwt from 'jsonwebtoken';
-import axios from 'axios';
-import querystring from 'querystring';
 import { getUserInfo } from './discord.js';
-import { getQueue1v1, getQueue2v2, isAlreadyOneQueing1v1, isAlreadyOneQueing2v2, queueConnect1v1, queueConnect2v2 } from './ranked/queuing.js';
+import { getQueue1v1, getQueue2v2, queueConnect1v1, queueConnect2v2 } from './ranked/queuing.js';
+import { getMatchs, verifyMatch } from './ranked/matchs.js';
 
 const app = express()
 const port = 3001
@@ -27,6 +25,46 @@ app.get('/userToken', async (req, res) => {
     const user = await getUser(token);
     res.json(user);
 })
+app.get('/tournaments', async (req, res) => {
+    const tournaments = await getTournaments();
+    res.json(tournaments);
+})
+app.get('/tournaments/1v1', async (req, res) => {
+    const tournaments1v1 = await getTournaments1v1();
+    res.json(tournaments1v1);
+})
+app.get('/tournaments/2v2', async (req, res) => {
+    const tournaments2v2 = await getTournaments2v2();
+    res.json(tournaments2v2);
+})
+
+/***************/
+/*    MATCHS   */
+/***************/
+
+app.get('/matchs', async (req, res) =>{
+    const matchs = await getMatchs();
+    res.json(matchs);
+})
+app.get('/matchs/format', async (req, res) =>{
+    const matchs = await getMatchsFormated();
+    res.json(matchs);
+})
+app.get('/matchs/player', async (req, res) => {
+    const token = req.body;
+    const matchs = await getMatchsFromPlayer(token);
+    res.json(matchs);
+})
+app.post('/matchs/verify', async (req, res) =>{
+    const { token, match_id } = req.body;
+    verifyMatch(token, match_id);
+    res.json("OK");
+})
+
+/***************/
+/*    USER     */
+/***************/
+
 app.get('/users', async (req, res) => {
     const users = await getUsers();
     res.json(users);
@@ -43,27 +81,7 @@ app.get('/users/by/elo/2v2', async (req, res) => {
     const users = await getUsersFilteredByElo2v2();
     res.json(users);
 })
-app.get('/tournaments', async (req, res) => {
-    const tournaments = await getTournaments();
-    res.json(tournaments);
-})
-app.get('/tournaments/1v1', async (req, res) => {
-    const tournaments1v1 = await getTournaments1v1();
-    res.json(tournaments1v1);
-})
-app.get('/tournaments/2v2', async (req, res) => {
-    const tournaments2v2 = await getTournaments2v2();
-    res.json(tournaments2v2);
-})
-app.get('/matchs', async (req, res) =>{
-    const matchs = await getMatchs();
-    res.json(matchs);
-})
-app.get('/matchsFromPlayer', async (req, res) => {
-    const ID = req.body;
-    const matchs = await getMatchsFromPlayer(ID);
-    res.json(matchs);
-})
+
 app.post('/users/tag1', async (req, res) =>{
     const { token, tags1 } = req.body;
     const tag = await setTag1(token, parseInt(tags1));
@@ -84,6 +102,8 @@ app.post('/users/create', async (req, res) => {
     const newUser = await createUser(token);
     res.json(newUser);
 })
+
+
 
 app.listen(port, () => {
     console.log(`Node.JS server launched on port [${port}] : http://localhost:${port}`)
@@ -164,37 +184,25 @@ async function getTournaments2v2()
     return tournaments2v2;
 }
 
-async function getMatchs()
-{
-    try {
-        return await getTable("matchs");
-    } catch (error) {
-        console.error('Error fetching matchs:', error);
-        return [];
-    }
-}
+function isInMatchs(player, match) {
+    let playerEquipe1 = match.fields.equipe1.split(':');
+    let playerEquipe2 = match.fields.equipe2.split(':');
 
-function isInMatchs(player, matchs)
-{
-    let playerEquipe1 = matchs.fields.equipe1.split(':');
-    let playerEquipe2 = matchs.fields.equipe2.split(':');
-
-    if (playerEquipe1.has(player) || playerEquipe2.has(player)) {
+    if (playerEquipe1.includes(player) || playerEquipe2.includes(player) ) {
         return 1;
     }
     return 0;
 }
 
-async function getMatchsFromPlayer(player)
-{
-    let matchs = getMatchs();
+async function getMatchsFromPlayer(player) {
+    let matchs = await getMatchs();
     let matchsPlayer = matchs.filter(match => {
-    for (let i = 0; matchs[i] != null; i++) {
-        if (isInMatchs(player, matchs[i]) === 1)
-            matchsPlayer += matchs[i];
+        return isInMatchs(player, match) === 1;
+    });
+    for (let match in matchsPlayer) {
+
     }
-        return match.fields.equipe1
-    })
+    return matchsPlayer;
 }
 
 async function createUser(token)
@@ -262,4 +270,4 @@ async function getQueueMatchs2v2(user)
 }
 
 
-export { getUsers };
+export { getUsers, getUser };
