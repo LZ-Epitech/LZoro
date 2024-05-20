@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getUserToken } from '../../providers/getUsers';
+import { getUser, getUserToken } from '../../providers/getUsers';
 import { setTag1, setTag2} from '../../providers/setUsers';
 import './css/queue.css';
 import { getDiscordUser } from '../../providers/getDiscordLogin';
@@ -38,9 +38,9 @@ function Queue({activeUser, setActiveUser})
 
     const handlebutton1v1 = async () => {
         if (activeUser && activeUser.fields) {
-            await setTag1(activeUser.fields.token, 1);
-            setTags1(1);
-            const tag1 = await getDiscordUser(activeUser.fields.token);
+            const found = await setTag1(activeUser.fields.token, 1);
+            setTags1(found % 2);
+            const tag1 = await getUserToken(activeUser.fields.token);
             setActiveUser(tag1);
             console.log("tags : " + tags1);
             console.log("user : " + activeUser);
@@ -101,7 +101,7 @@ function Queue({activeUser, setActiveUser})
         if (!activeUser || !activeUser.fields) {
             return waitPlease();
         }
-        if (tags1 == 1 || tags2 == 1) {
+        if (tags1 === 1 || tags2 === 1) {
             return searchFuncAlready();
         }
         return searchButton();

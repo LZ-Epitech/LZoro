@@ -217,9 +217,10 @@ async function setTag1(user, tag)
 {
     const users = await getUser(user);
     if (tag === 1 && getQueueMatchs1v1(user) === 1) {
-        return;
+        return 2;
     }
-    return updateInTable(users.id, "users", [["tag1", tag]]);
+    updateInTable(users.id, "users", [["tag1", tag]]);
+    return tag;
 }
 
 async function setTag2(user, tag)
@@ -242,9 +243,10 @@ async function getQueueMatchs1v1(user)
 {
     const getUsersQueue = await getQueue1v1();
     const userL = await getUser(user);
-    if ((getUsersQueue.length - 1) >= 1) {
+    const user2 = getUsersQueue.find(element => element.id !== userL.id);
+    if (user2 !== null && user2 !== undefined) {
         console.log("1v1 Found !");
-        return queueConnect1v1(userL, getUsersQueue.find(element => element.id !== userL.id));
+        return queueConnect1v1(userL, user2);
     }
     return 0;
 }
