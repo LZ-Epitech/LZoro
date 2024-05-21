@@ -5,7 +5,10 @@ function MatchLine({match})
 {
     return (
         <div className="match__line">
-            <p>id</p>
+            <p>{match.equipe1}</p>
+            <p>{match.equipe2}</p>
+            <p>{match.id}</p>
+            <p>{match.verified}</p>
         </div>
     );
 }
