@@ -4,6 +4,7 @@ const getUser = async (token) => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+
             },
         });
         if (!response.ok) {
@@ -117,6 +118,7 @@ const getUsersByElo2v2 = async () => {
 
 const getTags = async (token) => {
     try {
+        // const token = localStorage.getItem('token');
         const response = await fetch(`http://localhost:3001/users/get/tags?token=${token}`, {
         method: 'GET',
         headers: {

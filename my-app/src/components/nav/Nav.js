@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './css/nav.css';
 import { getDiscordUser } from '../../providers/getDiscordLogin';
+import discordLogo from './discord_logo.png';
 
 function Nav() {
     const [discordUser, setDiscordUser] = useState(null);
@@ -9,6 +10,7 @@ function Nav() {
     useEffect(() => {
         const extractTokenFromUrl = async () => {
             const token = localStorage.getItem('token');
+            console.log(token);
             if (token) {
                 try {
                     const user = await getDiscordUser(token);
@@ -18,6 +20,7 @@ function Nav() {
                 }
             }
         };
+        console.log(discordUser);
         extractTokenFromUrl();
     }, []);
 
@@ -45,7 +48,10 @@ function Nav() {
                         <p>{discordUser.username}</p>
                     </div>
                 ) : (
-                    <button className="login-button" onClick={handleLogin}>Login with Discord</button>
+                    <button className="login-button" onClick={handleLogin}>
+                        <img src={discordLogo} alt="Discord Logo" className="discord-logo" />
+                        Login with Discord
+                    </button>
                 )}
             </div>
         </div>

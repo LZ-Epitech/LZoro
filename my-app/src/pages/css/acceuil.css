@@ -10,7 +10,7 @@
     width: 100vw;
     display: flex;
     justify-content: center;
-    background-color: #000814;
+    background-color: rgb(77, 96, 177);
     align-items: center;
     flex-direction: column;
 }
@@ -20,7 +20,7 @@
     padding: 0;
     display: flex;
     justify-content: center;
-    background-color: #000814;
+    background-image: url('bg.png');
     align-items: center;
     height: 100vh;
     width: 100vw;
@@ -34,12 +34,48 @@
 }
 
 .title h1 {
+    position: absolute;
+    top: 300px;
     z-index: 1;
     font-size: 50px;
     color: whitesmoke;
     cursor: default;
     user-select: none;
+    animation: textReveal 2s ease forwards;
     transition: all ease .5s;
+    opacity: 0;
+}
+
+@keyframes textReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.title p {
+    position: absolute;
+    z-index: 1;
+    top: 400px;
+    font-size: 30px;
+    color: whitesmoke;
+    cursor: default;
+    user-select: none;
+    animation: textReveal 2s ease forwards;
+}
+
+.title p.desc {
+    position: absolute;
+    z-index: 1;
+    top: 440px;
+    font-size: 30px;
+    color: whitesmoke;
+    cursor: default;
+    user-select: none;
 }
 
 .title h1::after {
@@ -64,4 +100,5 @@
     display: flex;
     justify-content: center;
     align-items: start;
+    background-image: url('bg2.png');
 }

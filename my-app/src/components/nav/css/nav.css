@@ -1,11 +1,13 @@
+body {
+    background-color: rgb(77, 93, 181);
+}
 .Nav {
-    background-color: #000814;
+    background-color: rgba(43, 41, 41, 0.0);
     position: sticky;
     width: 100vw;
-    display: flex;
-    justify-content: flex-end;
+    display: flex;  
+    justify-content: center;
     align-items: center;
-    /* padding: 20px; */
     top: 0;
     overflow: hidden;
 }
@@ -25,8 +27,8 @@
 .link {
     color: #fff;
     text-decoration: none;
-    font-size: 30px;
-    margin-top: 20px;
+    text-align: center;
+    font-size: 25px;
     margin-left: 20px;
     margin-right: 30px;
     transition: transform 0.3s ease;
@@ -48,17 +50,26 @@
 }
 
 .login-button {
+    display: flex;
+    align-items: center;
     background-color: #7289da;
     color: #fff;
     border: none;
     padding: 10px 20px;
     border-radius: 20px;
-    margin-top: 20px;
+    text-align: center;
     font-size: 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .login-button:hover {
     background-color: #5f73bc;
+    transform: scale(1.1);
+}
+
+.discord-logo {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
 }
