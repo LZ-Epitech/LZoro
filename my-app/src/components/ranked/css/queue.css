@@ -52,8 +52,9 @@
     font-size: 50px;
     width: 50vw;
     height: 50vh;
+    transition: .2s all ease;
 }
 
 .ranked__queue__already:hover {
-    color: red;
+    color: rgb(39, 57, 134);
 }

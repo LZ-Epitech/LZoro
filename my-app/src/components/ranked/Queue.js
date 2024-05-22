@@ -48,15 +48,6 @@ function Queue({activeUser, setActiveUser})
         }
     }
 
-    // const handlebutton2v2 = async () => {
-    //     if (activeUser && activeUser.fields) {
-    //         await setTag2(activeUser.fields.token, 1);
-    //         setTags2(1);
-    //         const user = await getDiscordUser(activeUser.fields.token);
-    //         setActiveUser(user);
-    //     }
-    // }
-
     const close = async () => {
         if (activeUser && activeUser.fields) {
             await setTag1(activeUser.fields.token, 0);
