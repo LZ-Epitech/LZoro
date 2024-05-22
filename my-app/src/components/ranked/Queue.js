@@ -38,7 +38,6 @@ function Queue({activeUser, setActiveUser})
     const handlebutton1v1 = async () => {
         if (activeUser && activeUser.fields) {
             const found = await setTag1(activeUser.fields.token, 1);
-            console.log(found);
             if (found === -1) {
                 alert("Tu ne peux pas lancer un nouveau match ! Valide d'abord le précédent.");
                 setTags1(0);

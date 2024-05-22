@@ -4,7 +4,6 @@ const getUser = async (token) => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-
             },
         });
         if (!response.ok) {

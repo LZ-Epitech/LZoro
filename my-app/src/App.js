@@ -18,7 +18,6 @@ function App()
         const checkToken = async () => {
             if (localStorage.getItem('token') != null) {
                 const discordUser = await getDiscordUser(localStorage.getItem('token'))
-                console.log(discordUser);
                 if (discordUser == null) {
                     createUsers(localStorage.getItem('token'));
                 }

@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import TopRankingsBoard from "../components/ranked/TopRankingsBoard";
-import { getUserByEmail, getUsers, getUsersByElo } from "../providers/getUsers";
+import { getUsersByElo } from "../providers/getUsers";
 import './css/ranked.css';
 import Queue from "../components/ranked/Queue";
-import setTag from "../providers/setUsers";
 import { getDiscordUser } from "../providers/getDiscordLogin";
 import MatchLine from "../components/ranked/matchLine";
+import { getMatchFormated } from "../providers/getMatchs";
+import LastMatchs from "../components/ranked/lastMatchs";
 
 function Ranked() {
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(0);
     const [activeBoard, setActiveBoard] = useState(1);
     const [activeUser, setActiveUser] = useState(0);
+    const [matchsList, setMatchsList] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,6 +34,9 @@ function Ranked() {
             try {
                 const userActive = await getDiscordUser(localStorage.getItem('token'));
                 setActiveUser(userActive);
+                const matchs = await getMatchFormated(userActive);
+                console.log(matchs);
+                setMatchsList(matchs);
                 let load = isLoading + 1;
                 setIsLoading(load);
             } catch (error) {
@@ -73,7 +78,7 @@ function Ranked() {
             case 3:
                 return (
                     <section className="lastMatchs">
-                        {isLoading > 2 ? ( <p>Loading...</p> ) : ( <MatchLine/> )}
+                        {isLoading > 2 ? ( <p>Loading...</p> ) : ( <LastMatchs match={matchsList} /> )}
                     </section>
                 );
                 break;

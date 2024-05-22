@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { createInTable, getTable, postInTable, updateInTable } from './airtable.js';
+import { createInTable, getTable, updateInTable } from './airtable.js';
 import { getUserInfo } from './discord.js';
 import { getQueue1v1, getQueue2v2, queueConnect1v1, queueConnect2v2 } from './ranked/queuing.js';
 import { getFormatMatch, getMatchs, hasUnverifiedMatch, isInMatchs, verifyMatch } from './ranked/matchs.js';
@@ -51,10 +51,18 @@ app.get('/matchs/format', async (req, res) =>{
     res.json(matchs);
 })
 app.get('/matchs/player', async (req, res) => {
-    const token = req.body;
-    const matchs = await getMatchsFromPlayer(token);
-    res.json(matchs);
-})
+    const { token } = req.query;
+    if (!token) {
+        return res.status(401).json({ error: 'No token provided' });
+    }
+    try {
+        const matchs = await getMatchsFromPlayer(token);
+        res.json(matchs);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch matches' });
+    }
+});
+
 app.post('/matchs/verify', async (req, res) =>{
     const { token, match_id } = req.body;
     verifyMatch(token, match_id);
@@ -186,13 +194,22 @@ async function getTournaments2v2()
 
 async function getMatchsFromPlayer(player) {
     let matchs = await getMatchs();
+    const user = await getUser(player);
+
     let matchsPlayer = matchs.filter(match => {
-        return isInMatchs(player, match) === 1;
+        const inMatch = isInMatchs(user.id, match) === 1;
+        return inMatch;
     });
-    matchsPlayer.forEach(element => {
-        return getFormatMatch(element);
+
+    console.log("Filtered matches:", matchsPlayer);
+
+    let formattedMatchsPlayer = matchsPlayer.map(element => {
+        const formatted = getFormatMatch(element);
+        console.log("Formatted match:", formatted);
+        return formatted;
     });
-    return matchsPlayer;
+
+    return formattedMatchsPlayer;
 }
 
 async function createUser(token)
