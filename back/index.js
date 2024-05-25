@@ -205,12 +205,8 @@ async function getMatchsFromPlayer(player) {
         const inMatch = isInMatchs(user.id, match) === 1;
         return inMatch;
     });
-
-    console.log("Filtered matches:", matchsPlayer);
-
     let formattedMatchsPlayer = matchsPlayer.map(element => {
         const formatted = getFormatMatch(element, users);
-        console.log("Formatted match:", formatted);
         return formatted;
     });
 

@@ -10,7 +10,6 @@ function MatchsCard()
         const fetchData = async () => {
             const matches = getMatchFormated();
             setMatchs(matches);
-            console.log(matches);
         };
         fetchData();
     }, []);

@@ -5,8 +5,6 @@ async function getUserInfo(accessToken) {
                 'Authorization': `Bearer ${accessToken}`
             }
         });
-
-        console.log("Statut de la réponse:", response.status);
         if (response.ok) {
             return response.json();
         } else {

@@ -231,7 +231,6 @@ async function deleteInTable(table, data)
                 console.error('An error occurred:', err);
                 return;
             }
-            console.log('Deleted record', deletedRecord.id);
         });
     } catch (error) {
         console.error('Unexpected error:', error);

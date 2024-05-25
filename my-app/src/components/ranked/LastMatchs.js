@@ -11,11 +11,9 @@ function LastMatchs({user})
         if (user.fields && user) {
             const setMatches = async () => {
                 let allMatchs = await getMatchFormated(user.fields.token);
-                console.log(allMatchs);
                 setMatchs(allMatchs);
             }
             setMatches();
-            console.log(matchs);
         }
     }, [user]);
 
