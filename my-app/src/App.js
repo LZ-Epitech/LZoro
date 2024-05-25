@@ -36,7 +36,6 @@ function App()
                         }
                     }
                 } else {
-                    console.log("L'URL ne contient pas de fragment.");
         }}}
         checkToken();
     }, []);

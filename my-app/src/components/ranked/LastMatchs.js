@@ -21,7 +21,7 @@ function LastMatchs({user})
 
     const matchList = matchs.map((element, index) => {
         const isEven = index % 2 === 0;
-        const className = isEven ? 'matchLine one' : 'matchLine two';
+        const className = isEven ? 'matchLine ones' : 'matchLine twos';
 
         return <MatchLine match={element} classe={className}/>
     });

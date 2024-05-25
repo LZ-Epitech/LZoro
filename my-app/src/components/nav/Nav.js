@@ -10,7 +10,6 @@ function Nav() {
     useEffect(() => {
         const extractTokenFromUrl = async () => {
             const token = localStorage.getItem('token');
-            console.log(token);
             if (token) {
                 try {
                     const user = await getDiscordUser(token);
@@ -20,7 +19,6 @@ function Nav() {
                 }
             }
         };
-        console.log(discordUser);
         extractTokenFromUrl();
     }, []);
 
