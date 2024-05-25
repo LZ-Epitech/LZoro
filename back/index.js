@@ -195,6 +195,7 @@ async function getTournaments2v2()
 async function getMatchsFromPlayer(player) {
     let matchs = await getMatchs();
     const user = await getUser(player);
+    const users = await getUsers();
 
     let matchsPlayer = matchs.filter(match => {
         const inMatch = isInMatchs(user.id, match) === 1;
@@ -204,7 +205,7 @@ async function getMatchsFromPlayer(player) {
     console.log("Filtered matches:", matchsPlayer);
 
     let formattedMatchsPlayer = matchsPlayer.map(element => {
-        const formatted = getFormatMatch(element);
+        const formatted = getFormatMatch(element, users);
         console.log("Formatted match:", formatted);
         return formatted;
     });

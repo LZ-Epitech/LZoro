@@ -1,5 +1,5 @@
 import { createInTable, getTable, updateInTableObj } from "../airtable.js";
-import { getUser } from "../index.js";
+import { getUser, getUsers } from "../index.js";
 
 function createMatch1v1(user1, user2)
 {
@@ -70,11 +70,22 @@ function isInMatchs(player, match) {
 }
 
 // /matchsFormated
-function getFormatMatch(match) {
+function getFormatMatch(match, users) {
+    let user1;
+    let user2;
+
+    for (let i = 0; users[i] != null; i++) {
+        if (match.fields.equipe1 === users[i].id) {
+            user1 = users[i];
+        }
+        if (match.fields.equipe2 === users[i].id){
+            user2 = users[i];
+        }
+    }
     const data = {
         match_id : match.id,
-        user1: match.fields.equipe1,
-        user2: match.fields.equipe2,
+        user1: user1,
+        user2: user2,
         format: "1v1",
         score: match.fields.score,
         verified: match.fields.verified

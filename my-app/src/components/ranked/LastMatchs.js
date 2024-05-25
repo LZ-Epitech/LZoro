@@ -19,8 +19,11 @@ function LastMatchs({user})
         }
     }, [user]);
 
-    const matchList = matchs.map(element => {
-        return <MatchLine match={element} />
+    const matchList = matchs.map((element, index) => {
+        const isEven = index % 2 === 0;
+        const className = isEven ? 'matchLine one' : 'matchLine two';
+
+        return <MatchLine match={element} classe={className}/>
     });
 
     return (
