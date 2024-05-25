@@ -7,12 +7,19 @@
     align-items: center;
     height: 50px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    margin: 10px 0;
 }
 
-.one {
+.matchLine.ones {
     background-color: rgb(39, 57, 134);
 }
 
-.two {
+.matchLine.twos {
     background-color: #6F7CC3;
+}
+
+.fieldsLastMatchLine {
+    width: 20%;
+    display: flex;
+    justify-content: center;
 }

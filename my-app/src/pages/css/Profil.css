@@ -2,61 +2,124 @@
 
 .profil-container {
     width: 90vw; /* Utilisation de 90% de la largeur de la vue */
-    height: 40vw; /* La hauteur est égale à la largeur pour former un carré */
+    height: 75vh; /* La hauteur est égale à la largeur pour former un carré */
     margin: 5vh auto; /* Centrer verticalement et horizontalement */
-    text-align: center;
+    position: relative;
     padding: 20px;
     background-color: #f0f0f0;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.profil-container img {
-    /* position: absolute; */
-    margin-right: 1450px;
-    width: 10%; /* Ajuste la taille de l'image si nécessaire */
+.profil-header {
+    display: flex;
+    align-items: center;
+}
+
+.profil-header img {
+    border: solid black 1px;
     border-radius: 50%;
-    margin-bottom: 20px;
 }
 
-.profil-container h2 {
-    position: absolute;
-    font-size: 60px;
-    top: 280px;
-    margin-left: 250px;
-    color: black;
+.profil-name {
+    font-size: 50px;
+    margin-left: 50px;
 }
 
-.discord {
+
+.profil-btns {
     position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: row;
+    user-select: none;
+}
+
+.profil-btn {
+    width: 200px;
+    height: 50px;
+    font-weight: 700;
+    font-size: 25px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 50px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.btn_suppr {
+    background-color: red;
+    color: white;
+    position: relative;
+    z-index: 1;
+}
+
+.square-btn_suppr {
+    z-index: -1;
+    position: absolute;
+    width: 0;
+    transition: all 0.2s cubic-bezier(0.420, 0.000, 0.580, 1.000);
+    height: 100%;
+    background-color: rgb(184, 50, 50);
+    box-sizing: border-box;
+    display: block;
+    top: 0;
+    left: 0;
+}
+
+.btn_suppr:hover .square-btn_suppr{
+    width: 100%;
+}
+
+.btn_edit {
+    background-color: rgb(141, 158, 255);
+    position: relative;
+    z-index: 1;
+}
+
+.square-btn_edit {
+    z-index: -1;
+    position: absolute;
+    width: 0;
+    transition: all 0.2s cubic-bezier(0.420, 0.000, 0.580, 1.000);
+    height: 100%;
+    background-color: rgb(75, 150, 190);
+    box-sizing: border-box;
+    display: block;
+    top: 0;
+    left: 0;
+}
+
+.btn_edit:hover .square-btn_edit{
+    width: 100%;
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+}
+
+.cell {
     font-size: 30px;
-    top: 400px;
-    left: 250px;
-    color: black;
+    padding: 2px;
+    width: 100px;
 }
 
-.elo1v1 {
-    position: absolute;
-    font-size: 30px;
-    top: 600px;
-    left: 250px;
-    color: black;
+.col1 {
+    text-align: right;
 }
 
-.elo2v2 {
-    position: absolute;
-    font-size: 30px;
-    top: 800px;
-    left: 250px;
-    color: black;
+.col2 {
+    width: auto;
 }
 
-.profil-container p {
-    margin: 10px 0;
+.col3 {
+    text-align: start;
 }
-
-.profil-container p strong {
-    font-weight: bold;
-}
-
-/* You can add more styling as needed */

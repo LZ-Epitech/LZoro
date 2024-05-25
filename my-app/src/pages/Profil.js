@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import './css/Profil.css';
-import { getDiscordUser } from '../providers/getDiscordLogin';
+import { getUserToken } from '../providers/getUsers';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 function Profil() {
-    const [dataProfil, setDataProfil] = useState(null); // Initialiser à null pour indiquer le chargement
-    const [loading, setLoading] = useState(true); // État de chargement initialisé à true
+    const [user, setUser] = useState(null);
+    const [load, setLoad] = useState(false);
 
     useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            setLoad(true);
+            return;
+        }
+
         const fetchData = async () => {
             try {
-                const user = await getDiscordUser(localStorage.getItem('token'));
-                setDataProfil(user);
-                setLoading(false); // Mettre à jour l'état de chargement à false une fois les données reçues
+                const profile = await getUserToken(token);
+                setUser(profile);
             } catch (error) {
-                console.error('Erreur lors de la récupération des données de profil :', error);
-                setLoading(false); // Mettre à jour l'état de chargement à false en cas d'erreur
+                console.error('Error fetching user data:', error);
+            } finally {
+                setLoad(true);
             }
         };
 
@@ -23,22 +31,47 @@ function Profil() {
 
     return (
         <div className="profil-container">
-            {!dataProfil ? (
-                <p>Connectez-vous avec Discord !.</p>
+            {!load ? (
+                <p>Chargement...</p>
+            ) : !user ? (
+                <p>Connectez-vous avec Discord !</p>
             ) : (
                 <>
-                    <h2>{dataProfil.fields.name}</h2>
-                    <img src={`https://cdn.discordapp.com/avatars/${dataProfil.fields.discordID}/${dataProfil.fields.avatar}.png`} alt="Profil" />
-                    <div>
-                        <p className='discord'><strong>Discord : {dataProfil.fields.username}</strong></p>
-                        <p className='elo1v1'><strong>ELO 1v1 : {dataProfil.fields.elo1v1}</strong></p>
-                        <p className='elo2v2'><strong>ELO 2v2 : {dataProfil.fields.elo2v2}</strong></p>
+                    <div className='profil-header'>
+                        <img src={`https://cdn.discordapp.com/avatars/${user.fields.discordID}/${user.fields.avatar}.png`} alt="Profil" />
+                        <h2 className='profil-name'>{user.fields.name}</h2>
+                    </div>
+                    {/* <div class="table">
+                        <div class="row">
+                            <div class="cell col1">Discord</div>
+                            <div class="cell col2">:</div>
+                            <div class="cell col3">{user.fields.username}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell col1">Elo 1v1</div>
+                            <div class="cell col2">:</div>
+                            <div class="cell col3">{user.fields.elo1v1}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell col1">Elo 2v2</div>
+                            <div class="cell col2">:</div>
+                            <div class="cell col3">{user.fields.elo2v2}</div>
+                        </div>
+                    </div> */}
+                    <div className='profil-btns'>
+                        <div className='profil-btn btn_suppr'>
+                            <div className='square-btn_suppr'></div>
+                            Supprimer <FontAwesomeIcon icon={faXmark} style={{paddingLeft: '10px',}} />
+                        </div>
+                        <div className='profil-btn btn_edit'>
+                            <div className='square-btn_edit'></div>
+                            Modifier <FontAwesomeIcon icon={faPen} style={{paddingLeft: '10px',}}/>
+                        </div>
                     </div>
                 </>
             )}
         </div>
     );
 }
-
 
 export default Profil;
