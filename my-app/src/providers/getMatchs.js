@@ -1,10 +1,9 @@
-const getMatchFormated = async () => {
+const getMatchFormated = async (token) => {
     try {
-        const response = await fetch('http://localhost:3001/matchsFormated', {
+        const response = await fetch(`http://localhost:3001/matchs/player?token=${token}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-
             },
         });
         if (!response.ok) {

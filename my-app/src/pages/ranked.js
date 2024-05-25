@@ -5,6 +5,7 @@ import './css/ranked.css';
 import Queue from "../components/ranked/Queue";
 import setTag from "../providers/setUsers";
 import { getDiscordUser } from "../providers/getDiscordLogin";
+import { LastMatchs } from "../components/ranked/LastMatchs";
 
 function Ranked() {
     const [users, setUsers] = useState([]);
@@ -72,7 +73,7 @@ function Ranked() {
             case 3:
                 return (
                     <section className="lastMatchs">
-                        {isLoading > 2 ? ( <p>Loading...</p> ) : ( <p>LASTMATCHS</p> )}
+                        {isLoading > 2 ? ( <p>Loading...</p> ) : ( <LastMatchs user={activeUser} /> )}
                     </section>
                 );
                 break;
