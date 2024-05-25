@@ -12,7 +12,6 @@ import { createUsers } from './providers/setUsers.js';
 
 function App()
 {
-
     useEffect(() => {
         const currentUrl = window.location.href;
 
