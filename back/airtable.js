@@ -217,5 +217,25 @@ function createInTable(table, data)
     });
 }
 
+async function deleteInTable(table, data)
+{
+    Airtable.configure({
+        endpointUrl: 'https://api.airtable.com',
+        apiKey: APIKEY
+    });
+    var base = Airtable.base('appBAcxHY6p1Dpv3p');
 
-export { getTable, postInTable, updateInTable, updateInTable1v1, updateInTable2v2, createInTable, updateInTableObj };
+    try {
+        base(table).destroy(data, function(err, deletedRecord) {
+            if (err) {
+                console.error('An error occurred:', err);
+                return;
+            }
+            console.log('Deleted record', deletedRecord.id);
+        });
+    } catch (error) {
+        console.error('Unexpected error:', error);
+    }
+}
+
+export { getTable, postInTable, updateInTable, updateInTable1v1, updateInTable2v2, createInTable, updateInTableObj, deleteInTable };

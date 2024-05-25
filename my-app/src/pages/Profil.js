@@ -3,6 +3,7 @@ import './css/Profil.css';
 import { getUserToken } from '../providers/getUsers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { deleteUser } from '../providers/setUsers';
 
 function Profil() {
     const [user, setUser] = useState(null);
@@ -28,6 +29,12 @@ function Profil() {
 
         fetchData();
     }, []);
+
+    const supprUser = () => {
+        deleteUser(user.fields.token);
+        localStorage.removeItem('token');
+        window.location.reload();
+    }
 
     return (
         <div className="profil-container">
@@ -59,7 +66,7 @@ function Profil() {
                         </div>
                     </div> */}
                     <div className='profil-btns'>
-                        <div className='profil-btn btn_suppr'>
+                        <div className='profil-btn btn_suppr' onClick={supprUser}>
                             <div className='square-btn_suppr'></div>
                             Supprimer <FontAwesomeIcon icon={faXmark} style={{paddingLeft: '10px',}} />
                         </div>

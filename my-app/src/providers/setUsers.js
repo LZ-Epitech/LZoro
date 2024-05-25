@@ -55,4 +55,23 @@ const createUsers = async (token) => {
     } finally {}
 }
 
-export { setTag1, setTag2, createUsers };
+const deleteUser = async (token) => {
+    try {
+        const response = await fetch('http://localhost:3001/users/delete', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ token: token }),
+        });
+        if (!response.ok) {
+            throw new Error('Failed to fetch data');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    } finally {}
+}
+
+export { setTag1, setTag2, createUsers, deleteUser };

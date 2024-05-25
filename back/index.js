@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { createInTable, getTable, updateInTable } from './airtable.js';
+import { createInTable, deleteInTable, getTable, updateInTable } from './airtable.js';
 import { getUserInfo } from './discord.js';
 import { getQueue1v1, getQueue2v2, queueConnect1v1, queueConnect2v2 } from './ranked/queuing.js';
 import { getFormatMatch, getMatchs, hasUnverifiedMatch, isInMatchs, verifyMatch } from './ranked/matchs.js';
@@ -110,7 +110,11 @@ app.post('/users/create', async (req, res) => {
     const newUser = await createUser(token);
     res.json(newUser);
 })
-
+app.delete('/users/delete', async (req, res) => {
+    const { token } = req.body;
+    const respons = await deleteUser(token);
+    res.json(respons);
+})
 
 
 app.listen(port, () => {
@@ -280,6 +284,28 @@ async function getQueueMatchs2v2(user)
         return queueConnect2v2(user, getUsersQueue[0], getUsersQueue[1], getUsersQueue[2])
     }
     return 0;
+}
+
+async function getUserId(id) {
+    const users = await getUsers();
+
+    for (let i = 0; users[i] != null; i++) {
+        if (users[i].id === id) {
+            return users[i];
+        }
+    }
+    return 0;
+}
+
+async function deleteUser(token) {
+    try {
+        const user = await getUser(token);
+        console.log(token);
+        await deleteInTable('users', user.id);
+        return 1;
+    } catch (error) {
+        return 0;
+    }
 }
 
 
