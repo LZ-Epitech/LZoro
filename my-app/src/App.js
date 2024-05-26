@@ -21,6 +21,9 @@ function App()
                 const discordUser = await getDiscordUser(localToken);
                 if (!discordUser) {
                     createUsers(localToken);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2500);
                     return;
                 }
             } else if (currentUrl.includes("#")) {
@@ -30,13 +33,7 @@ function App()
                 if (params.has("access_token")) {
                     const accessToken = params.get("access_token");
                     localStorage.setItem('token', accessToken);
-                    const discordUser = await getDiscordUser(accessToken);
-                    if (!discordUser) {
-                        console.log('Creating user with token from URL fragment');
-                        createUsers(accessToken);
-                        window.location.href = 'http://localhost:3000/';
-                        return;
-                    }
+                    window.location.href = 'http://localhost:3000/';
                 }
             }
         };
