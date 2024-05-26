@@ -52,12 +52,21 @@ function Profil() {
                         <img src={`https://cdn.discordapp.com/avatars/${user.fields.discordID}/${user.fields.avatar}.png`} alt="Profil" />
                         <h2 className='profil-name'>{user.fields.name}</h2>
                     </div>
-                    {/* <div class="table">
-                        <div class="row">
-                            <div class="cell col1">Discord</div>
-                            <div class="cell col2">:</div>
-                            <div class="cell col3">{user.fields.username}</div>
+                    <div className='profil-content'>
+                        <div className='profil-content-1v1'>
+                            <h3 className='profil-content-title'>1v1</h3>
+                            Votre classement : <br/>
+                            Votre élo : {user.fields.elo1v1} <br/>
+                            Votre évolution :<br/>
                         </div>
+                        <div className='profil-content-2v2'>
+                            <h3 className='profil-content-title'>2v2</h3>
+                            Votre classement : <br/>
+                            Votre élo : {user.fields.elo2v2} <br/>
+                            Votre évolution : <br/>
+                        </div>
+                    </div>
+                    {/* <div class="table">
                         <div class="row">
                             <div class="cell col1">Elo 1v1</div>
                             <div class="cell col2">:</div>
