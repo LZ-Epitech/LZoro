@@ -37,6 +37,7 @@ const setTag2 = async (token, tag) => {
 }
 
 const createUsers = async (token) => {
+    console.error("CREATE USER !!!!!!!!!!!!!");
     try {
         const response = await fetch('http://localhost:3001/users/create', {
             method: 'POST',
@@ -57,6 +58,7 @@ const createUsers = async (token) => {
 
 const deleteUser = async (token) => {
     try {
+        console.log("send");
         const response = await fetch('http://localhost:3001/users/delete', {
             method: 'DELETE',
             headers: {

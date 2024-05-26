@@ -26,6 +26,31 @@
     margin-left: 50px;
 }
 
+.profil-content {
+    margin-top: 20px;
+    width: 100%;
+    height: 70%;
+    display: flex;
+}
+
+.profil-content-title {
+    font-size: 30px;
+    text-decoration: underline;
+    text-align: center;
+}
+
+.profil-content-1v1, .profil-content-2v2 {
+    width: 50%;
+    height: 100%;
+}
+
+.profil-content-1v1 {
+    background-color: #9856af;
+}
+
+.profil-content-2v2 {
+    background-color: #98afe4;
+}
 
 .profil-btns {
     position: absolute;
@@ -122,4 +147,19 @@
 
 .col3 {
     text-align: start;
+}
+
+.delete-message {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    top: 5%;
+    left: 5%;
+    background-color: #4D5DB5;
+    font-weight: 900;
+    font-size: 50px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

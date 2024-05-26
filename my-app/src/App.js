@@ -9,6 +9,7 @@ import NoPage from './pages/NoPage.js';
 import { useEffect } from 'react';
 import { getDiscordUser } from './providers/getDiscordLogin.js';
 import { createUsers } from './providers/setUsers.js';
+import { getUser } from './providers/getUsers.js';
 
 function App()
 {
@@ -16,28 +17,25 @@ function App()
         const currentUrl = window.location.href;
 
         const checkToken = async () => {
-            const localToken = localStorage.getItem('token');
-            if (localToken) {
-                const discordUser = await getDiscordUser(localToken);
-                if (!discordUser) {
-                    console.log('Creating user with token from localStorage');
-                    createUsers(localToken);
-                    return;
-                }
-            } else if (currentUrl.includes("#")) {
+            if (currentUrl.includes("#")) {
                 const fragmentIndex = currentUrl.indexOf("#");
                 const fragment = currentUrl.substring(fragmentIndex + 1);
                 const params = new URLSearchParams(fragment);
                 if (params.has("access_token")) {
                     const accessToken = params.get("access_token");
                     localStorage.setItem('token', accessToken);
-                    const discordUser = await getDiscordUser(accessToken);
-                    if (!discordUser) {
-                        console.log('Creating user with token from URL fragment');
-                        createUsers(accessToken);
-                        window.location.href = 'http://localhost:3000/';
-                        return;
-                    }
+                    window.location.href = 'http://localhost:3000/';
+                }
+            }
+            const localToken = localStorage.getItem('token');
+            if (localToken) {
+                const discordUser = await getUser(localToken);
+                if (!discordUser) {
+                    createUsers(localToken);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2500);
+                    return;
                 }
             }
         };

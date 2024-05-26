@@ -1,5 +1,4 @@
 import { getUsers } from "./getUsers";
-import { createUsers } from "./setUsers";
 
 async function fetchDiscordUser(token) {
     try {
