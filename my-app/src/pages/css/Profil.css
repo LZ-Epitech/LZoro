@@ -123,3 +123,18 @@
 .col3 {
     text-align: start;
 }
+
+.delete-message {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    top: 5%;
+    left: 5%;
+    background-color: #4D5DB5;
+    font-weight: 900;
+    font-size: 50px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

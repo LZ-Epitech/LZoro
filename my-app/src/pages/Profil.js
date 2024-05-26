@@ -8,6 +8,7 @@ import { deleteUser } from '../providers/setUsers';
 function Profil() {
     const [user, setUser] = useState(null);
     const [load, setLoad] = useState(false);
+    const [deleteMessage, setDeleteMessage] = useState('');
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -30,10 +31,13 @@ function Profil() {
         fetchData();
     }, []);
 
-    const supprUser = () => {
+    const supprUser = async () => {
         deleteUser(user.fields.token);
         localStorage.removeItem('token');
-        window.location.reload();
+        setDeleteMessage(<p>Votre compte a été supprimé.<br/> La page va se recharger dans 5 secondes.</p>);
+        setTimeout(() => {
+            window.location.reload();
+        }, 5000);
     }
 
     return (
@@ -75,6 +79,11 @@ function Profil() {
                             Modifier <FontAwesomeIcon icon={faPen} style={{paddingLeft: '10px',}}/>
                         </div>
                     </div>
+                    {deleteMessage && (
+                        <div className="delete-message">
+                            {deleteMessage}
+                        </div>
+                    )}
                 </>
             )}
         </div>

@@ -2,9 +2,6 @@ import './css/acceuil.css';
 import TopRankings from '../components/acceuil/toprankings';
 import { TournamentView } from '../components/acceuil/tournamentview';
 import { Ensemble } from '../components/acceuil/ensemble';
-import { useEffect, useState } from 'react';
-import { getUsersByElo } from '../providers/getUsers';
-import { getTournament } from '../providers/getTournament';
 
 function Acceuil()
 {

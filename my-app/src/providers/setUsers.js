@@ -57,6 +57,7 @@ const createUsers = async (token) => {
 
 const deleteUser = async (token) => {
     try {
+        console.log("send");
         const response = await fetch('http://localhost:3001/users/delete', {
             method: 'DELETE',
             headers: {

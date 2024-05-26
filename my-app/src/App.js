@@ -20,7 +20,6 @@ function App()
             if (localToken) {
                 const discordUser = await getDiscordUser(localToken);
                 if (!discordUser) {
-                    console.log('Creating user with token from localStorage');
                     createUsers(localToken);
                     return;
                 }
