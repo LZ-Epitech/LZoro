@@ -107,9 +107,19 @@ app.get('/users/get/tags', async (req, res) =>{
 })
 app.post('/users/create', async (req, res) => {
     const { token } = req.body;
-    const newUser = await createUser(token);
-    res.json(newUser);
-})
+    try {
+        const existingUser = await getUser(token);
+
+        if (existingUser) {
+            return res.status(200).json(existingUser);
+        }
+        const result = createUser(token);
+        res.status(201).json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to create user' });
+    }
+});
 app.delete('/users/delete', async (req, res) => {
     const { token } = req.body;
     const respons = await deleteUser(token);
@@ -215,6 +225,10 @@ async function getMatchsFromPlayer(player) {
 
 async function createUser(token)
 {
+    const isExist = await getUser(token);
+    if (isExist !== null && isExist !== undefined) {
+        return isExist;
+    }
     const user = await getUserInfo(token);
     const data = [["token", token],
         ["name", user.global_name],
