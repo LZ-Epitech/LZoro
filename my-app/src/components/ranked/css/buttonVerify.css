@@ -1,0 +1,11 @@
+.buttonVerify {
+    border-radius: 100px;
+    height: 100%;
+    background-color: #40916c;
+    display: flex;
+    align-items: center;
+}
+
+.buttonVerify p {
+    padding-right: 10px;
+}
